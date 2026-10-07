@@ -1,180 +1,187 @@
-/* Portfolio tracker — reads holdings.json + prices.json (static), renders everything. */
+/* Shyam's Portfolio: reads holdings.json + prices.json (static) and renders the page. */
 (() => {
-  const PALETTE = ["#d9b46a", "#7c9cff", "#3fd39a", "#ff8a65", "#c58cff", "#4dd0e1", "#f06292", "#aed581", "#ffd54f", "#90a4ae", "#ba68c8", "#4db6ac"];
-  const REFRESH_MS = 5 * 60 * 1000; // re-read prices.json every 5 min while page is open
-  const CCYS = ["USD", "SGD", "AUD"];
-  // URL params override saved prefs, e.g. index.html?ccy=SGD, ?ccy=AUD or ?private=1 (handy for sharing)
+  const PALETTE = ["#d6006e", "#0069aa", "#5c2d6e", "#1bb2e6", "#cfc1d6", "#12a639", "#f39200", "#7a8b99", "#a3195b", "#00a19a", "#6d4c9f", "#9bbb59"];
+  const ROWBG = { NYSE: "rgba(18,166,57,.1)", NASDAQ: "rgba(18,166,57,.1)", ASX: "rgba(214,0,110,.08)" };
+  const REFRESH_MS = 5 * 60 * 1000;
+  const CCYS = ["USD", "SGD"]; // only USD/SGD; anything else (e.g. ?ccy=aud) falls back to USD
   const qs = new URLSearchParams(location.search);
   const state = {
     ccy: (() => { const c = (qs.get("ccy") || localStorage.getItem("pt-ccy") || "USD").toUpperCase(); return CCYS.includes(c) ? c : "USD"; })(),
     priv: qs.has("private") ? qs.get("private") !== "0" : localStorage.getItem("pt-priv") === "1",
-    data: null,
+    group: "holding", sortK: "usd", sortDir: -1, open: new Set(), data: null,
   };
   const $ = (s) => document.querySelector(s);
-
-  const fmt = (n, ccy, opts = {}) => {
-    if (n == null || isNaN(n)) return "—";
-    const sym = { USD: "$", AUD: "A$", SGD: "S$" }[ccy] ?? "";
-    const abs = Math.abs(n);
-    const d = opts.dp ?? (abs >= 1000 ? 0 : abs >= 1 ? 2 : abs >= 0.1 ? 3 : 4);
-    return (n < 0 ? "−" : "") + sym + abs.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
-  };
-  const fmtQty = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 4 });
-  const fmtPct = (p, dp = 2) => (p == null || isNaN(p) ? "—" : (p > 0 ? "+" : p < 0 ? "−" : "") + Math.abs(p).toFixed(dp) + "%");
-  const wtxt = (w) => (w > 0 && w < 0.1 ? "<0.1%" : w.toFixed(1) + "%");
-  const cls = (p) => (p == null || Math.abs(p) < 0.005 ? "flat" : p > 0 ? "up" : "down");
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const SYM = { USD: "US$", SGD: "S$", AUD: "A$" };
+  const fmt = (n, ccy, dp) => {
+    if (n == null || isNaN(n)) return "—";
+    const a = Math.abs(n), d = dp ?? (a >= 1000 ? 0 : a >= 1 ? 2 : a >= 0.1 ? 3 : 4);
+    return (n < 0 ? "−" : "") + (SYM[ccy] ?? "") + a.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  };
+  const fmtPct = (p, dp = 2) => (p == null || isNaN(p) ? "—" : (p > 0 ? "+" : p < 0 ? "−" : "") + Math.abs(p).toFixed(dp));
+  const cls = (p) => (p == null || Math.abs(p) < 0.005 ? "flat" : p > 0 ? "up" : "down");
+  const wtxt = (w) => (w > 0 && w < 0.1 ? "<0.1" : w.toFixed(1));
 
   async function load() {
     const bust = "?t=" + Date.now();
-    const [h, p] = await Promise.all([
-      fetch("holdings.json" + bust).then((r) => r.json()),
-      fetch("prices.json" + bust).then((r) => r.json()),
-    ]);
-    const audusd = p.fx?.AUDUSD || 0.66;
-    const usdsgd = p.fx?.USDSGD || null; // SGD per USD
+    const [h, p] = await Promise.all([fetch("holdings.json" + bust).then((r) => r.json()), fetch("prices.json" + bust).then((r) => r.json())]);
+    const audusd = p.fx?.AUDUSD || 0.66, usdsgd = p.fx?.USDSGD || null;
     const toUSD = { USD: 1, AUD: audusd, ...(usdsgd ? { SGD: 1 / usdsgd } : {}) };
     const rows = h.holdings.map((x) => {
       const q = p.quotes?.[x.symbol] || {};
       const ccy = q.currency || (x.symbol.endsWith(".AX") ? "AUD" : "USD");
-      const price = q.price ?? null;
-      const local = price != null ? price * x.quantity : null;
-      const usd = local != null ? local * (toUSD[ccy] ?? 1) : null;
-      const pct = q.change_pct ?? null;
+      const price = q.price ?? null, local = price != null ? price * x.quantity : null;
+      const usd = local != null ? local * (toUSD[ccy] ?? 1) : null, pct = q.change_pct ?? null;
       const dayUSD = usd != null && pct != null ? usd - usd / (1 + pct / 100) : 0;
-      return { ...x, ccy, price, local, usd, pct, dayUSD, stale: !!q.stale, marketTime: q.market_time, missing: price == null };
+      return { ...x, ccy, price, local, usd, pct, dayUSD, stale: !!q.stale, missing: price == null };
     });
-    const total = rows.reduce((a, r) => a + (r.usd || 0), 0);
-    const dayUSD = rows.reduce((a, r) => a + r.dayUSD, 0);
+    const total = rows.reduce((a, r) => a + (r.usd || 0), 0), dayUSD = rows.reduce((a, r) => a + r.dayUSD, 0);
     rows.forEach((r) => (r.weight = total ? ((r.usd || 0) / total) * 100 : 0));
-    rows.sort((a, b) => (b.usd || 0) - (a.usd || 0));
-    rows.forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
+    [...rows].sort((a, b) => (b.usd || 0) - (a.usd || 0)).forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
+    if (qs.has("details")) state.open = new Set(rows.map((r) => r.ticker));
     state.data = { h, p, rows, total, dayUSD, dayPct: total ? (dayUSD / (total - dayUSD)) * 100 : 0, audusd, usdsgd };
     render();
   }
 
-  // Convert a USD amount into currency c (defaults to the toggle). Falls back to USD if a rate is missing.
-  const rateOf = (c) => (c === "AUD" ? 1 / state.data.audusd : c === "SGD" ? state.data.usdsgd : 1);
   const effCcy = () => (state.ccy === "SGD" && !state.data.usdsgd ? "USD" : state.ccy);
-  const conv = (usd, c = effCcy()) => (usd == null ? null : usd * (rateOf(c) || 1));
+  const conv = (usd, c = effCcy()) => (usd == null ? null : usd * (c === "SGD" ? state.data.usdsgd : 1));
 
   function render() {
     const { h, p, rows, total, dayUSD, dayPct, audusd, usdsgd } = state.data;
-    const C = effCcy();
-    document.title = h.title || "Portfolio";
-    $("#title").textContent = h.title || "Portfolio";
+    const C = effCcy(), other = C === "USD" ? "SGD" : "USD";
+    const title = h.title || "Portfolio";
+    document.title = title; $("#title").textContent = title; $("#crumbTitle").textContent = title;
+    if (h.wordmark) { $("#wordmark").textContent = h.wordmark; $("#wordmark2").textContent = h.wordmark; $("#copy").textContent = "© " + (h.owner || h.wordmark); }
     document.body.classList.toggle("private", state.priv);
     $("#privacy").classList.toggle("on", state.priv);
-    document.querySelectorAll(".seg button").forEach((b) => b.classList.toggle("on", b.dataset.ccy === C));
+    document.querySelectorAll(".ccy-switch [data-ccy]").forEach((b) => b.classList.toggle("on", b.dataset.ccy === C));
+    $("#ccyKnob").classList.toggle("sgd", C === "SGD");
+    $("#noteCcy").textContent = C === "SGD" ? "Singapore dollars" : "US dollars";
+    $("#noteOther").textContent = C === "SGD" ? "US dollars" : "Singapore dollars";
 
-    // Headline: USD big, SGD right under it (always). AUD added as a small note when AUD is selected.
-    $("#total").innerHTML = esc(fmt(total, "USD", { dp: 0 })) + `<span class="ccy">USD</span>`;
-    $("#totalSGD").textContent = usdsgd ? fmt(conv(total, "SGD"), "SGD", { dp: 0 }) : "—";
-    $("#totalAlt").textContent = C === "AUD" ? "≈ " + fmt(conv(total, "AUD"), "AUD", { dp: 0 }) + " AUD" : "";
-    const dc = $("#dayChg");
-    dc.className = "pill " + cls(dayPct);
-    dc.innerHTML = `${fmtPct(dayPct)} <span class="money">· ${dayUSD >= 0 ? "+" : ""}${esc(fmt(conv(dayUSD), C, { dp: 0 }))}</span>`;
-    $("#nPos").textContent = rows.length;
-    const us = rows.filter((r) => r.ccy === "USD").reduce((a, r) => a + r.weight, 0);
-    $("#split").textContent = `${us.toFixed(0)}% / ${(100 - us).toFixed(0)}%`;
-    $("#fx").textContent = audusd.toFixed(4);
-    $("#fxSGD").textContent = usdsgd ? usdsgd.toFixed(4) : "—";
-
-    renderDonut(rows);
-
-    $("#rows").innerHTML = rows.map((r) => {
-      const badge = r.missing ? `<span class="tag">NO PRICE</span>` : r.stale ? `<span class="tag" title="No trades recently (halted/suspended). Using last price.">HALTED</span>` : "";
-      const valMain = esc(fmt(conv(r.usd), C));
-      const local = esc(fmt(r.local, r.ccy));
-      const price = esc(fmt(r.price, r.ccy));
-      return `
-      <div class="row" data-t="${esc(r.ticker)}">
-        <div class="stock">
-          <div class="logo${r.ticker.length > 3 ? " long" : ""}" style="--c:${r.color}">${esc(r.ticker.slice(0, 4))}</div>
-          <div style="min-width:0">
-            <div class="tkr">${esc(r.ticker)} <span class="ex">${esc(r.exchange)}</span> ${badge}</div>
-            <div class="nm">${esc(r.name)}</div>
-          </div>
-        </div>
-        <div class="right">
-          <div class="val">${valMain}</div>
-          <div class="sub"><span class="${cls(r.pct)}">${fmtPct(r.pct)}</span> · ${wtxt(r.weight)}</div>
-        </div>
-        <div class="meta">
-          <span><b>${fmtQty(r.quantity)}</b> sh</span>
-          <span>@ <b>${price}</b> ${r.ccy}</span>
-          ${r.ccy !== C ? `<span class="money">${local} ${r.ccy}</span>` : ""}
-        </div>
-        <div class="bar"><i style="width:${r.weight}%;background:${r.color}"></i></div>
-        <div class="cell">${fmtQty(r.quantity)}</div>
-        <div class="cell">${price}<span class="sub">${r.ccy}</span></div>
-        <div class="cell money">${local}<span class="sub">${r.ccy}</span></div>
-        <div class="cell val">${valMain}<span class="sub">${C}</span></div>
-        <div class="cell ${cls(r.pct)}">${fmtPct(r.pct)}</div>
-        <div class="cell wcell"><span>${wtxt(r.weight)}</span><div class="bar"><i style="width:${Math.min(100, r.weight * 2.5)}%;background:${r.color}"></i></div></div>
-      </div>`;
-    }).join("");
-
-    // timestamps
     const d = new Date(p.updated);
-    const opt = { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" };
-    $("#tPT").textContent = d.toLocaleString("en-US", { ...opt, timeZone: "America/Vancouver" }) + " PT";
-    $("#tPOM").textContent = d.toLocaleString("en-US", { ...opt, timeZone: "Pacific/Port_Moresby" }) + " PGT";
-    const ageH = (Date.now() - d) / 36e5;
-    $("#liveDot").classList.toggle("stale", ageH > 26);
+    const o = { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" };
+    const pt = d.toLocaleString("en-US", { ...o, timeZone: "America/Vancouver" }) + " PT";
+    const pom = d.toLocaleString("en-US", { ...o, timeZone: "Pacific/Port_Moresby" }) + " (Port Moresby)";
+    $("#noteUpdated").textContent = `${pt} / ${pom}`;
+    $("#asAt").textContent = pt;
+    $("#chartAsAt").textContent = `(as at ${d.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric", timeZone: "America/Vancouver" })})`;
+    $("#tPT").textContent = d.toLocaleString("en-US", { ...o, timeZone: "America/Vancouver" }) + " PT";
+    $("#tPOM").textContent = d.toLocaleString("en-US", { ...o, timeZone: "Pacific/Port_Moresby" }) + " PGT";
+
+    $("#totalLink").textContent = fmt(conv(total, C), C, 0);
+    $("#totalOther").textContent = usdsgd ? ` (${fmt(conv(total, other), other, 0)})` : "";
+    $("#totUSD").textContent = fmt(total, "USD", 0);
+    $("#totSGD").textContent = usdsgd ? fmt(conv(total, "SGD"), "SGD", 0) : "—";
+    $("#dayChg").innerHTML = `<span class="${cls(dayPct)}">${fmtPct(dayPct)}%</span> <small class="money ${cls(dayPct)}">${dayUSD >= 0 ? "+" : ""}${esc(fmt(conv(dayUSD), C, 0))}</small>`;
+    $("#nPos").textContent = rows.length;
+    $("#fxLine").textContent = `USD/SGD ${usdsgd ? usdsgd.toFixed(4) : "—"} · AUD/USD ${audusd.toFixed(4)}`;
+    $("#thValue").innerHTML = `Value<br><span class="th-sub">(${C === "SGD" ? "S$" : "US$"})</span>`;
+
+    renderChart();
+    renderTable();
+
     const notes = [];
     const halted = rows.filter((r) => r.stale && !r.missing).map((r) => r.ticker);
-    if (halted.length) notes.push(`${halted.join(", ")}: no recent trades (suspended/halted), valued at last price.`);
+    if (halted.length) notes.push(`${halted.join(", ")}: no recent trades (suspended/halted); valued at the last traded price.`);
     const missing = rows.filter((r) => r.missing).map((r) => r.ticker);
-    if (missing.length) notes.push(`${missing.join(", ")}: price unavailable.`);
-    $("#notes").textContent = notes.join(" ");
+    if (missing.length) notes.push(`${missing.join(", ")}: price currently unavailable.`);
+    notes.push("Weights are based on market value in US dollars. Percentages are rounded to one decimal place and may not add up to 100.");
+    $("#footnote").innerHTML = notes.map((n, i) => `<p><sup>${i + 1}</sup> ${esc(n)}</p>`).join("");
+  }
+
+  function groups() {
+    const { rows } = state.data, g = state.group;
+    if (g === "holding") return [...rows].sort((a, b) => b.weight - a.weight).map((r) => ({ key: r.ticker, label: `${r.full_name || r.name}`, usd: r.usd || 0, weight: r.weight, color: r.color }));
+    const keyOf = { sector: (r) => r.sector || "Other", hq: (r) => r.hq || "Other", exchange: (r) => r.exchange, currency: (r) => r.ccy }[g];
+    const m = new Map();
+    rows.forEach((r) => { const k = keyOf(r); const e = m.get(k) || { key: k, label: k, usd: 0, weight: 0 }; e.usd += r.usd || 0; e.weight += r.weight; m.set(k, e); });
+    return [...m.values()].sort((a, b) => b.weight - a.weight).map((e, i) => ({ ...e, color: PALETTE[i % PALETTE.length] }));
   }
 
   function arc(cx, cy, r, a0, a1) {
-    const p = (a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    const pt = (a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    const [x0, y0] = pt(a0), [x1, y1] = pt(a1);
     return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
   }
 
-  function renderDonut(rows) {
-    const svg = $("#donut");
-    const gap = 0.022, R = 92;
-    let a = -Math.PI / 2;
-    let paths = `<circle cx="110" cy="110" r="${R}" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="22"/>`;
-    rows.filter((r) => r.weight > 0).forEach((r) => {
-      const sweep = (r.weight / 100) * Math.PI * 2;
-      const g = sweep > gap * 2 ? gap : sweep / 3;
-      paths += `<path d="${arc(110, 110, R, a + g / 2, a + sweep - g / 2)}" stroke="${r.color}" stroke-width="22" fill="none" stroke-linecap="butt" data-t="${esc(r.ticker)}"/>`;
-      a += sweep;
+  function renderChart() {
+    const C = effCcy(), gs = groups();
+    const labels = { holding: "Holding", sector: "Sector", hq: "Headquarters", exchange: "Exchange", currency: "Currency" };
+    $("#dcLabel").textContent = labels[state.group];
+    document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("selected", b.dataset.g === state.group));
+    const R = 105, W = 26, gap = 0.012;
+    let a = -Math.PI / 2, svg = `<circle cx="120" cy="120" r="${R - W / 2 - 6}" fill="none" stroke="#cfcfcf" stroke-width="3" stroke-dasharray="1.5 2.5"/>`;
+    gs.filter((g) => g.weight > 0).forEach((g) => {
+      const sw = (g.weight / 100) * Math.PI * 2, gg = sw > gap * 3 ? gap : 0;
+      svg += `<path d="${arc(120, 120, R, a + gg / 2, a + sw - gg / 2)}" stroke="${g.color}" stroke-width="${W}" fill="none" data-k="${esc(g.key)}"><title>${esc(g.label)}: ${wtxt(g.weight)}%</title></path>`;
+      a += sw;
     });
-    svg.innerHTML = paths;
-    $("#legend").innerHTML = rows.map((r) => `<li data-t="${esc(r.ticker)}"><span class="sw" style="background:${r.color}"></span><span class="tk">${esc(r.ticker)}</span><span class="pc">${wtxt(r.weight)}</span></li>`).join("");
-    const hl = (t) => {
-      svg.classList.toggle("hovering", !!t);
-      svg.querySelectorAll("path").forEach((p) => p.classList.toggle("hl", p.dataset.t === t));
-      document.querySelectorAll(".legend li").forEach((li) => li.classList.toggle("hl", li.dataset.t === t));
-      const r = rows.find((x) => x.ticker === t);
-      $("#dcLabel").textContent = r ? r.ticker : "Allocation";
-      $("#dcVal").textContent = r ? r.weight.toFixed(1) + "%" : rows.length + " stocks";
+    $("#donut").innerHTML = svg;
+    $("#legend").innerHTML = gs.map((g) => `<tr data-k="${esc(g.key)}"><td><span class="dot" style="background:${g.color}"></span>${esc(g.label)}</td><td class="num v money">${esc(fmt(conv(g.usd), C, 0))}</td><td class="num hl">${wtxt(g.weight)}</td></tr>`).join("");
+    const hl = (k) => {
+      $("#donut").classList.toggle("hovering", !!k);
+      document.querySelectorAll("#donut path").forEach((p) => p.classList.toggle("hl", p.dataset.k === k));
     };
-    hl(null);
-    document.querySelectorAll("#donut path, .legend li").forEach((el) => {
-      el.addEventListener("mouseenter", () => hl(el.dataset.t));
+    document.querySelectorAll("#donut path, #legend tr").forEach((el) => {
+      el.addEventListener("mouseenter", () => hl(el.dataset.k));
       el.addEventListener("mouseleave", () => hl(null));
-      el.addEventListener("click", () => hl(el.dataset.t));
     });
   }
 
-  document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
-    state.ccy = b.dataset.ccy; localStorage.setItem("pt-ccy", state.ccy); state.data && render();
+  function logoHTML(r) {
+    const mono = `<span class="mono" style="color:${r.color}">${esc(r.ticker)}</span>`;
+    if (!r.logo) return mono;
+    return `<img src="${esc(r.logo)}" alt="${esc(r.full_name || r.name)}" loading="lazy" style="max-height:${Math.round(32 * Math.min(1, r.logo_scale ?? 1))}px" onerror="this.outerHTML=this.dataset.mono" data-mono="${esc(mono)}">`;
+  }
+
+  function renderTable() {
+    const C = effCcy(), { rows } = state.data, k = state.sortK, dir = state.sortDir;
+    const val = (r) => (k === "name" ? (r.full_name || r.name).toLowerCase() : r[k] ?? -Infinity);
+    const sorted = [...rows].sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * dir);
+    document.querySelectorAll("#htable th.sort").forEach((th) => { th.classList.toggle("asc", th.dataset.k === k && dir > 0); th.classList.toggle("desc", th.dataset.k === k && dir < 0); });
+    $("#rows").innerHTML = sorted.map((r) => {
+      const open = state.open.has(r.ticker), bg = ROWBG[r.exchange] || "rgba(0,105,170,.08)";
+      const badge = r.missing ? `<span class="tag">NO PRICE</span>` : r.stale ? `<span class="tag">HALTED</span>` : "";
+      const where = [r.hq_city, r.hq].filter(Boolean).join(", ");
+      return `<tr class="r${open ? " open" : ""}" data-t="${esc(r.ticker)}" style="--rowbg:${bg}" tabindex="0" aria-expanded="${open}">
+        <td class="c-logo sticky"><div class="logo">${logoHTML(r)}</div></td>
+        <td class="c-name sticky2"><div class="nm">${esc(r.full_name || r.name)}&nbsp;<span class="caret">▼</span></div><div class="tk">${esc(r.ticker)} ${badge}</div></td>
+        <td class="num">${r.quantity.toLocaleString("en-US")}</td>
+        <td class="num">${esc(fmt(r.price, r.ccy))}<span class="sub">${r.ccy}</span></td>
+        <td class="num mval">${esc(fmt(conv(r.usd), C))}${r.ccy !== C ? `<span class="sub">${esc(fmt(r.local, r.ccy))}</span>` : ""}</td>
+        <td class="num ${cls(r.pct)}">${fmtPct(r.pct)}</td>
+        <td class="num">${wtxt(r.weight)}</td>
+        <td>${esc(r.sector || "")}</td>
+        <td>${esc(r.exchange)}</td>
+      </tr>
+      <tr class="d" style="--rowbg:${bg}" ${open ? "" : "hidden"}><td colspan="9"><div class="din">
+        <p class="desc">${esc(r.description || "")}</p>
+        <dl>${r.industry ? `<dt>Industry</dt><dd>${esc(r.industry)}</dd>` : ""}${where ? `<dt>HQ</dt><dd>${esc(where)}</dd>` : ""}<dt>Listing</dt><dd>${esc(r.exchange)}: ${esc(r.ticker)}</dd>${r.website ? `<dt>Website</dt><dd><a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\/(www\.)?/, ""))}</a></dd>` : ""}</dl>
+      </div></td></tr>`;
+    }).join("");
+    document.querySelectorAll("#rows tr.r").forEach((tr) => {
+      const t = () => { const k2 = tr.dataset.t; state.open.has(k2) ? state.open.delete(k2) : state.open.add(k2); renderTable(); };
+      tr.addEventListener("click", t);
+      tr.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t(); } });
+    });
+  }
+
+  document.querySelectorAll("#htable th.sort").forEach((th) => th.addEventListener("click", () => {
+    const k = th.dataset.k;
+    state.sortDir = state.sortK === k ? -state.sortDir : (k === "name" || k === "sector" || k === "exchange" ? 1 : -1);
+    state.sortK = k; renderTable();
   }));
-  $("#privacy").addEventListener("click", () => {
-    state.priv = !state.priv; localStorage.setItem("pt-priv", state.priv ? "1" : "0"); state.data && render();
+  document.querySelectorAll("#tabs button").forEach((b) => b.addEventListener("click", () => { state.group = b.dataset.g; renderChart(); }));
+  const setCcy = (c) => { state.ccy = c; localStorage.setItem("pt-ccy", c); state.data && render(); };
+  document.querySelectorAll(".ccy-switch [data-ccy]").forEach((b) => b.addEventListener("click", () => setCcy(b.dataset.ccy)));
+  $("#ccyKnob").addEventListener("click", () => setCcy(state.ccy === "USD" ? "SGD" : "USD"));
+  $("#privacy").addEventListener("click", () => { state.priv = !state.priv; localStorage.setItem("pt-priv", state.priv ? "1" : "0"); state.data && render(); });
+  $("#share").addEventListener("click", async () => {
+    const url = location.href.split("#")[0];
+    try { if (navigator.share) await navigator.share({ title: document.title, url }); else { await navigator.clipboard.writeText(url); $("#share").title = "Link copied"; } } catch (_) {}
   });
 
-  load().catch((e) => {
-    console.error(e);
-    $("#notes").textContent = "Couldn't load holdings.json / prices.json. If opened as a local file, serve the folder (python3 -m http.server) or host it.";
-  });
+  load().catch((e) => { console.error(e); $("#footnote").textContent = "Couldn't load holdings.json / prices.json. Serve this folder over http (python3 -m http.server) or host it."; });
   setInterval(() => load().catch(() => {}), REFRESH_MS);
 })();
