@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-07T05:08:19+00:00",
+  "updated": "2026-10-07T05:08:28+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
     "AUDUSD": 0.6973,
@@ -45,7 +45,7 @@
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "Gentrack Group Limited",
-      "market_time": "2026-10-07T04:47:51+00:00",
+      "market_time": "2026-10-07T04:48:20+00:00",
       "stale": false
     },
     "ONON": {
@@ -115,7 +115,7 @@
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-07T05:08:18+00:00",
+      "market_time": "2026-10-07T05:08:26+00:00",
       "stale": false
     }
   },
