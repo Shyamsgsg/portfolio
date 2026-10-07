@@ -1,21 +1,21 @@
 {
-  "updated": "2026-10-07T20:11:56+00:00",
+  "updated": "2026-10-07T20:43:18+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
     "AUDUSD": 0.6963,
     "AUDUSD_change_pct": -0.0617,
-    "USDSGD": 1.2799,
-    "USDSGD_change_pct": 0.0469
+    "USDSGD": 1.2797,
+    "USDSGD_change_pct": 0.0313
   },
   "quotes": {
     "NU": {
-      "price": 15.59,
+      "price": 15.58,
       "previous_close": 15.66,
-      "change_pct": -0.447,
+      "change_pct": -0.5109,
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "Nu Holdings Ltd.",
-      "market_time": "2026-10-07T20:00:00+00:00",
+      "market_time": "2026-10-07T20:00:02+00:00",
       "stale": false
     },
     "BOC.AX": {
@@ -49,13 +49,13 @@
       "stale": false
     },
     "ONON": {
-      "price": 33.215,
+      "price": 33.22,
       "previous_close": 33.130001,
-      "change_pct": 0.2566,
+      "change_pct": 0.2717,
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "On Holding AG",
-      "market_time": "2026-10-07T19:59:59+00:00",
+      "market_time": "2026-10-07T20:00:02+00:00",
       "stale": false
     },
     "IREN": {
@@ -75,7 +75,7 @@
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "Cameco Corporation",
-      "market_time": "2026-10-07T19:59:56+00:00",
+      "market_time": "2026-10-07T20:00:02+00:00",
       "stale": false
     },
     "GOOG": {
@@ -105,17 +105,17 @@
       "currency": "USD",
       "exchange": "CCY",
       "long_name": "AUD/USD",
-      "market_time": "2026-10-07T20:10:47+00:00",
+      "market_time": "2026-10-07T20:42:47+00:00",
       "stale": false
     },
     "SGD=X": {
-      "price": 1.2799,
+      "price": 1.2797,
       "previous_close": 1.2793,
-      "change_pct": 0.0469,
+      "change_pct": 0.0313,
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-07T20:11:47+00:00",
+      "market_time": "2026-10-07T20:43:17+00:00",
       "stale": false
     }
   },
