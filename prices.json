@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-07T23:10:01+00:00",
+  "updated": "2026-10-07T23:33:29+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
-    "AUDUSD": 0.6963,
-    "AUDUSD_change_pct": -0.2693,
-    "USDSGD": 1.2795,
-    "USDSGD_change_pct": 0.1558
+    "AUDUSD": 0.6964,
+    "AUDUSD_change_pct": -0.255,
+    "USDSGD": 1.2794,
+    "USDSGD_change_pct": 0.1479
   },
   "quotes": {
     "NU": {
@@ -29,23 +29,23 @@
       "stale": true
     },
     "EML.AX": {
-      "price": 0.225,
+      "price": 0.215,
       "previous_close": 0.225,
-      "change_pct": 0.0,
+      "change_pct": -4.4444,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "EML Payments Limited",
-      "market_time": "2026-10-07T05:10:04+00:00",
+      "market_time": "2026-10-07T23:11:46+00:00",
       "stale": false
     },
     "GTK.AX": {
-      "price": 3.27,
-      "previous_close": 3.19,
-      "change_pct": 2.5078,
+      "price": 3.23,
+      "previous_close": 3.27,
+      "change_pct": -1.2232,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "Gentrack Group Limited",
-      "market_time": "2026-10-07T05:10:07+00:00",
+      "market_time": "2026-10-07T23:08:08+00:00",
       "stale": false
     },
     "ONON": {
@@ -99,23 +99,23 @@
       "stale": false
     },
     "AUDUSD=X": {
-      "price": 0.6963,
+      "price": 0.6964,
       "previous_close": 0.69818,
-      "change_pct": -0.2693,
+      "change_pct": -0.255,
       "currency": "USD",
       "exchange": "CCY",
       "long_name": "AUD/USD",
-      "market_time": "2026-10-07T23:08:50+00:00",
+      "market_time": "2026-10-07T23:32:51+00:00",
       "stale": false
     },
     "SGD=X": {
-      "price": 1.2795,
+      "price": 1.2794,
       "previous_close": 1.27751,
-      "change_pct": 0.1558,
+      "change_pct": 0.1479,
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-07T23:10:00+00:00",
+      "market_time": "2026-10-07T23:33:25+00:00",
       "stale": false
     }
   },

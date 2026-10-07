@@ -35,9 +35,21 @@
       const dayUSD = usd != null && pct != null ? usd - usd / (1 + pct / 100) : 0;
       return { ...x, ccy, price, local, usd, pct, dayUSD, stale: !!q.stale, missing: price == null };
     });
+    [...rows].sort((a, b) => (b.usd || 0) - (a.usd || 0)).forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
+    // Cash balances (holdings.json "cash"): face value, converted at live FX; no price and no day change.
+    (h.cash || []).forEach((c) => {
+      const ccy = String(c.currency || "USD").toUpperCase(), amount = Number(c.amount) || 0;
+      const rate = ccy === "USD" ? 1 : ccy === "AUD" ? audusd : ccy === "SGD" ? (usdsgd ? 1 / usdsgd : null) : p.fx?.[ccy + "USD"] ?? null;
+      rows.push({
+        ticker: "CASH-" + ccy, isCash: true, name: c.label || `Cash (${ccy})`, full_name: c.label || `Cash (${ccy})`,
+        sector: "Cash", industry: "Cash & equivalents", hq: "Cash", exchange: "Cash", ccy, quantity: null, price: null,
+        local: amount, usd: rate != null ? amount * rate : null, pct: null, dayUSD: 0, missing: rate == null,
+        logo: c.logo || "logos/cash.svg", logo_scale: 0.85, color: c.color || "#15af9b", rate,
+        description: c.description || `Cash held in ${ccy}, converted at the latest exchange rate.`,
+      });
+    });
     const total = rows.reduce((a, r) => a + (r.usd || 0), 0), dayUSD = rows.reduce((a, r) => a + r.dayUSD, 0);
     rows.forEach((r) => (r.weight = total ? ((r.usd || 0) / total) * 100 : 0));
-    [...rows].sort((a, b) => (b.usd || 0) - (a.usd || 0)).forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
     if (qs.has("details")) state.open = new Set(rows.map((r) => r.ticker));
     state.data = { h, p, rows, total, dayUSD, dayPct: total ? (dayUSD / (total - dayUSD)) * 100 : 0, audusd, usdsgd };
     render();
@@ -74,7 +86,8 @@
     $("#totUSD").textContent = fmt(total, "USD", 0);
     $("#totSGD").textContent = usdsgd ? fmt(conv(total, "SGD"), "SGD", 0) : "—";
     $("#dayChg").innerHTML = `<span class="${cls(dayPct)}">${fmtPct(dayPct)}%</span> <small class="money ${cls(dayPct)}">${dayUSD >= 0 ? "+" : ""}${esc(fmt(conv(dayUSD), C, 0))}</small>`;
-    $("#nPos").textContent = rows.length;
+    const nStocks = rows.filter((r) => !r.isCash).length, hasCash = rows.some((r) => r.isCash);
+    $("#nPos").innerHTML = nStocks + (hasCash ? ` <small>+ cash</small>` : "");
     $("#fxLine").textContent = `USD/SGD ${usdsgd ? usdsgd.toFixed(4) : "—"} · AUD/USD ${audusd.toFixed(4)}`;
     $("#thValue").innerHTML = `Value<br><span class="th-sub">(${C === "SGD" ? "S$" : "US$"})</span>`;
 
@@ -82,9 +95,10 @@
     renderTable();
 
     const notes = [];
+    rows.filter((r) => r.isCash && r.usd != null).forEach((r) => notes.push(`${r.name}: ${fmt(r.local, r.ccy, 0)} at ${r.ccy}/USD ${r.rate.toFixed(4)} = ${fmt(r.usd, "USD", 0)}${usdsgd ? ` / ${fmt(r.usd * usdsgd, "SGD", 0)}` : ""}. Cash is included in the total and weights and counts as 0% in the day change.`));
     const halted = rows.filter((r) => r.stale && !r.missing).map((r) => r.ticker);
     if (halted.length) notes.push(`${halted.join(", ")}: no recent trades (suspended/halted); valued at the last traded price.`);
-    const missing = rows.filter((r) => r.missing).map((r) => r.ticker);
+    const missing = rows.filter((r) => r.missing).map((r) => (r.isCash ? r.name + " (FX rate)" : r.ticker));
     if (missing.length) notes.push(`${missing.join(", ")}: price currently unavailable.`);
     notes.push("Weights are based on market value in US dollars. Percentages are rounded to one decimal place and may not add up to 100.");
     $("#footnote").innerHTML = notes.map((n, i) => `<p><sup>${i + 1}</sup> ${esc(n)}</p>`).join("");
@@ -96,7 +110,8 @@
     const keyOf = { sector: (r) => r.sector || "Other", hq: (r) => r.hq || "Other", exchange: (r) => r.exchange, currency: (r) => r.ccy }[g];
     const m = new Map();
     rows.forEach((r) => { const k = keyOf(r); const e = m.get(k) || { key: k, label: k, usd: 0, weight: 0 }; e.usd += r.usd || 0; e.weight += r.weight; m.set(k, e); });
-    return [...m.values()].sort((a, b) => b.weight - a.weight).map((e, i) => ({ ...e, color: PALETTE[i % PALETTE.length] }));
+    let i = 0;
+    return [...m.values()].sort((a, b) => b.weight - a.weight).map((e) => ({ ...e, color: e.key === "Cash" ? "#15af9b" : PALETTE[i++ % PALETTE.length] }));
   }
 
   function arc(cx, cy, r, a0, a1) {
@@ -141,23 +156,23 @@
     const sorted = [...rows].sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * dir);
     document.querySelectorAll("#htable th.sort").forEach((th) => { th.classList.toggle("asc", th.dataset.k === k && dir > 0); th.classList.toggle("desc", th.dataset.k === k && dir < 0); });
     $("#rows").innerHTML = sorted.map((r) => {
-      const open = state.open.has(r.ticker), bg = ROWBG[r.exchange] || "rgba(0,105,170,.08)";
+      const open = state.open.has(r.ticker), bg = r.isCash ? "rgba(0,105,170,.08)" : ROWBG[r.exchange] || "rgba(0,105,170,.08)";
       const badge = r.missing ? `<span class="tag">NO PRICE</span>` : r.stale ? `<span class="tag">HALTED</span>` : "";
-      const where = [r.hq_city, r.hq].filter(Boolean).join(", ");
+      const where = r.isCash ? "" : [r.hq_city, r.hq].filter(Boolean).join(", ");
       return `<tr class="r${open ? " open" : ""}" data-t="${esc(r.ticker)}" style="--rowbg:${bg}" tabindex="0" aria-expanded="${open}">
         <td class="c-logo sticky"><div class="logo">${logoHTML(r)}</div></td>
-        <td class="c-name sticky2"><div class="nm">${esc(r.full_name || r.name)}&nbsp;<span class="caret">▼</span></div><div class="tk">${esc(r.ticker)} ${badge}</div></td>
-        <td class="num">${r.quantity.toLocaleString("en-US")}</td>
-        <td class="num">${esc(fmt(r.price, r.ccy))}<span class="sub">${r.ccy}</span></td>
+        <td class="c-name sticky2"><div class="nm">${esc(r.full_name || r.name)}&nbsp;<span class="caret">▼</span></div><div class="tk">${r.isCash ? esc(r.ccy) + " balance" : esc(r.ticker)} ${badge}</div></td>
+        <td class="num">${r.isCash ? "—" : r.quantity.toLocaleString("en-US")}</td>
+        <td class="num">${r.isCash ? "—" : `${esc(fmt(r.price, r.ccy))}<span class="sub">${r.ccy}</span>`}</td>
         <td class="num mval">${esc(fmt(conv(r.usd), C))}${r.ccy !== C ? `<span class="sub">${esc(fmt(r.local, r.ccy))}</span>` : ""}</td>
-        <td class="num ${cls(r.pct)}">${fmtPct(r.pct)}</td>
+        <td class="num ${r.isCash ? "flat" : cls(r.pct)}">${r.isCash ? "—" : fmtPct(r.pct)}</td>
         <td class="num">${wtxt(r.weight)}</td>
         <td>${esc(r.sector || "")}</td>
-        <td>${esc(r.exchange)}</td>
+        <td>${r.isCash ? "—" : esc(r.exchange)}</td>
       </tr>
       <tr class="d" style="--rowbg:${bg}" ${open ? "" : "hidden"}><td colspan="9"><div class="din">
         <p class="desc">${esc(r.description || "")}</p>
-        <dl>${r.industry ? `<dt>Industry</dt><dd>${esc(r.industry)}</dd>` : ""}${where ? `<dt>HQ</dt><dd>${esc(where)}</dd>` : ""}<dt>Listing</dt><dd>${esc(r.exchange)}: ${esc(r.ticker)}</dd>${r.website ? `<dt>Website</dt><dd><a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\/(www\.)?/, ""))}</a></dd>` : ""}</dl>
+        <dl>${r.industry ? `<dt>Industry</dt><dd>${esc(r.industry)}</dd>` : ""}${where ? `<dt>HQ</dt><dd>${esc(where)}</dd>` : ""}${r.isCash ? `<dt>Balance</dt><dd class="money">${esc(fmt(r.local, r.ccy, 0))} ${esc(r.ccy)}</dd>${r.rate ? `<dt>FX rate</dt><dd>${esc(r.ccy)}/USD ${r.rate.toFixed(4)}</dd>` : ""}` : `<dt>Listing</dt><dd>${esc(r.exchange)}: ${esc(r.ticker)}</dd>`}${r.website ? `<dt>Website</dt><dd><a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\/(www\.)?/, ""))}</a></dd>` : ""}</dl>
       </div></td></tr>`;
     }).join("");
     document.querySelectorAll("#rows tr.r").forEach((tr) => {

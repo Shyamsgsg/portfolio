@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch latest quotes for every holding in holdings.json (plus AUDUSD FX)
+"""Fetch latest quotes for every holding in holdings.json (plus AUDUSD/USDSGD FX and any cash-currency FX)
 from Yahoo Finance's public chart API and write prices.json for the web page.
 
 Usage:  python3 update_prices.py
@@ -94,7 +94,12 @@ def main():
             old = {}
 
     quotes, errors = {}, []
-    symbols = [h["symbol"] for h in cfg["holdings"]] + list(FX_SYMBOLS.values())
+    # Cash in other currencies needs its own <CCY>USD rate (AUD/USD and USD/SGD are always fetched).
+    for c in cfg.get("cash", []):
+        ccy = str(c.get("currency", "")).upper()
+        if ccy and ccy not in ("USD", "AUD", "SGD"):
+            FX_SYMBOLS[f"{ccy}USD"] = f"{ccy}USD=X"
+    symbols = [h["symbol"] for h in cfg.get("holdings", [])] + list(FX_SYMBOLS.values())
     for sym in symbols:
         try:
             quotes[sym] = parse_quote(fetch_chart(sym))
