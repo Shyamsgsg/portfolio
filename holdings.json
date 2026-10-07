@@ -1,0 +1,17 @@
+{
+  "title": "Boss's Portfolio",
+  "owner": "Boss",
+  "base_currency": "USD",
+  "_note": "Edit quantities here. 'symbol' is the Yahoo Finance symbol (ASX tickers use the .AX suffix). Add new positions by copying a line.",
+  "holdings": [
+    { "ticker": "NU",   "symbol": "NU",     "name": "Nu Holdings",        "exchange": "NYSE",   "quantity": 2600 },
+    { "ticker": "BOC",  "symbol": "BOC.AX", "name": "Bougainville Copper", "exchange": "ASX",    "quantity": 912 },
+    { "ticker": "EML",  "symbol": "EML.AX", "name": "EML Payments",       "exchange": "ASX",    "quantity": 181000 },
+    { "ticker": "GTK",  "symbol": "GTK.AX", "name": "Gentrack Group",     "exchange": "ASX",    "quantity": 13700 },
+    { "ticker": "ONON", "symbol": "ONON",   "name": "On Holding",         "exchange": "NYSE",   "quantity": 1240 },
+    { "ticker": "IREN", "symbol": "IREN",   "name": "IREN Ltd",           "exchange": "NASDAQ", "quantity": 1600 },
+    { "ticker": "CCJ",  "symbol": "CCJ",    "name": "Cameco",             "exchange": "NYSE",   "quantity": 376 },
+    { "ticker": "GOOG", "symbol": "GOOG",   "name": "Alphabet (Class C)", "exchange": "NASDAQ", "quantity": 81 },
+    { "ticker": "TSLA", "symbol": "TSLA",   "name": "Tesla",              "exchange": "NASDAQ", "quantity": 281 }
+  ]
+}

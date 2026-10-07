@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Change the title here AND in holdings.json ("title") -->
+  <title>Boss's Portfolio</title>
+  <meta name="description" content="Live portfolio tracker" />
+  <meta name="theme-color" content="#0b0b0d" />
+  <meta property="og:title" content="Boss's Portfolio" />
+  <meta property="og:description" content="Holdings, allocation and daily performance." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230b0b0d'/><path d='M14 44 L26 30 L36 38 L50 20' stroke='%23d9b46a' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <h1 id="title">Boss's Portfolio</h1>
+      </div>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Currency">
+          <button data-ccy="USD" class="on">USD</button>
+          <button data-ccy="SGD">SGD</button>
+          <button data-ccy="AUD">AUD</button>
+        </div>
+        <button id="privacy" class="icon-btn" title="Hide amounts" aria-label="Hide amounts">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero card">
+      <p class="eyebrow">Total portfolio value</p>
+      <div class="totals">
+        <div class="total"><span id="total" class="amt">—</span></div>
+        <div class="total2">
+          <span class="ccy-chip">SGD</span>
+          <span id="totalSGD" class="amt amt2">—</span>
+          <span id="totalAlt" class="alt money"></span>
+        </div>
+      </div>
+      <div class="daychg">
+        <span id="dayChg" class="pill">—</span>
+        <span class="muted">today</span>
+      </div>
+      <div class="stats">
+        <div><p class="label">Positions</p><p id="nPos" class="stat">—</p></div>
+        <div><p class="label">US / ASX</p><p id="split" class="stat">—</p></div>
+        <div><p class="label">USD/SGD</p><p id="fxSGD" class="stat">—</p></div>
+        <div><p class="label">AUD/USD</p><p id="fx" class="stat">—</p></div>
+      </div>
+    </section>
+
+    <section class="alloc card">
+      <div class="donut-wrap">
+        <svg id="donut" viewBox="0 0 220 220" role="img" aria-label="Allocation chart"></svg>
+        <div class="donut-center">
+          <p class="label" id="dcLabel">Allocation</p>
+          <p class="dc-val" id="dcVal">100%</p>
+        </div>
+      </div>
+      <ul id="legend" class="legend"></ul>
+    </section>
+
+    <section class="card holdings">
+      <div class="h-head">
+        <h2>Holdings</h2>
+        <p class="muted small" id="sortHint">Sorted by value</p>
+      </div>
+      <div class="thead" aria-hidden="true">
+        <span>Stock</span><span>Quantity</span><span>Price</span><span>Value (local)</span><span>Value</span><span>Day</span><span>Weight</span>
+      </div>
+      <div id="rows"></div>
+    </section>
+
+    <footer class="foot">
+      <div class="updated">
+        <span class="dot" id="liveDot"></span>
+        <span>Last updated</span>
+      </div>
+      <div class="times">
+        <div><p class="label">Pacific Time</p><p id="tPT">—</p></div>
+        <div><p class="label">Port Moresby</p><p id="tPOM">—</p></div>
+      </div>
+      <p class="muted small" id="notes"></p>
+      <p class="muted tiny">Prices from Yahoo Finance, may be delayed. Not investment advice.</p>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
