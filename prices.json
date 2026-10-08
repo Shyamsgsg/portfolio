@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-08T23:11:40+00:00",
+  "updated": "2026-10-08T23:43:20+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
-    "AUDUSD": 0.6961,
-    "AUDUSD_change_pct": -0.0431,
-    "USDSGD": 1.2807,
-    "USDSGD_change_pct": 0.0821
+    "AUDUSD": 0.6962,
+    "AUDUSD_change_pct": -0.0287,
+    "USDSGD": 1.2808,
+    "USDSGD_change_pct": 0.0899
   },
   "quotes": {
     "NU": {
@@ -29,23 +29,23 @@
       "stale": true
     },
     "EML.AX": {
-      "price": 0.215,
-      "previous_close": 0.225,
-      "change_pct": -4.4444,
+      "price": 0.22,
+      "previous_close": 0.215,
+      "change_pct": 2.3256,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "EML Payments Limited",
-      "market_time": "2026-10-08T05:10:17+00:00",
+      "market_time": "2026-10-08T23:21:17+00:00",
       "stale": false
     },
     "GTK.AX": {
-      "price": 3.25,
-      "previous_close": 3.27,
-      "change_pct": -0.6116,
+      "price": 3.29,
+      "previous_close": 3.25,
+      "change_pct": 1.2308,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "Gentrack Group Limited",
-      "market_time": "2026-10-08T05:10:19+00:00",
+      "market_time": "2026-10-08T23:05:32+00:00",
       "stale": false
     },
     "ONON": {
@@ -99,23 +99,23 @@
       "stale": false
     },
     "AUDUSD=X": {
-      "price": 0.6961,
+      "price": 0.6962,
       "previous_close": 0.6964,
-      "change_pct": -0.0431,
+      "change_pct": -0.0287,
       "currency": "USD",
       "exchange": "CCY",
       "long_name": "AUD/USD",
-      "market_time": "2026-10-08T23:10:50+00:00",
+      "market_time": "2026-10-08T23:42:51+00:00",
       "stale": false
     },
     "SGD=X": {
-      "price": 1.2807,
+      "price": 1.2808,
       "previous_close": 1.27965,
-      "change_pct": 0.0821,
+      "change_pct": 0.0899,
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-08T23:11:39+00:00",
+      "market_time": "2026-10-08T23:43:19+00:00",
       "stale": false
     }
   },
