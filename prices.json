@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-09T05:11:32+00:00",
+  "updated": "2026-10-09T05:44:16+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
-    "AUDUSD": 0.6985,
-    "AUDUSD_change_pct": 0.3015,
-    "USDSGD": 1.2791,
-    "USDSGD_change_pct": -0.043
+    "AUDUSD": 0.699,
+    "AUDUSD_change_pct": 0.3733,
+    "USDSGD": 1.2789,
+    "USDSGD_change_pct": -0.0586
   },
   "quotes": {
     "NU": {
@@ -29,23 +29,23 @@
       "stale": true
     },
     "EML.AX": {
-      "price": 0.22,
+      "price": 0.225,
       "previous_close": 0.215,
-      "change_pct": 2.3256,
+      "change_pct": 4.6512,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "EML Payments Limited",
-      "market_time": "2026-10-09T04:49:45+00:00",
+      "market_time": "2026-10-09T05:10:28+00:00",
       "stale": false
     },
     "GTK.AX": {
-      "price": 3.32,
+      "price": 3.33,
       "previous_close": 3.25,
-      "change_pct": 2.1538,
+      "change_pct": 2.4615,
       "currency": "AUD",
       "exchange": "ASX",
       "long_name": "Gentrack Group Limited",
-      "market_time": "2026-10-09T04:50:55+00:00",
+      "market_time": "2026-10-09T05:10:30+00:00",
       "stale": false
     },
     "ONON": {
@@ -99,23 +99,23 @@
       "stale": false
     },
     "AUDUSD=X": {
-      "price": 0.6985,
+      "price": 0.699,
       "previous_close": 0.6964,
-      "change_pct": 0.3015,
+      "change_pct": 0.3733,
       "currency": "USD",
       "exchange": "CCY",
       "long_name": "AUD/USD",
-      "market_time": "2026-10-09T05:10:47+00:00",
+      "market_time": "2026-10-09T05:42:48+00:00",
       "stale": false
     },
     "SGD=X": {
-      "price": 1.2791,
+      "price": 1.2789,
       "previous_close": 1.27965,
-      "change_pct": -0.043,
+      "change_pct": -0.0586,
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-09T05:11:31+00:00",
+      "market_time": "2026-10-09T05:44:15+00:00",
       "stale": false
     }
   },
