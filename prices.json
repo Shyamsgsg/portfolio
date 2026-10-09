@@ -1,21 +1,21 @@
 {
-  "updated": "2026-10-09T13:15:26+00:00",
+  "updated": "2026-10-09T13:45:38+00:00",
   "source": "Yahoo Finance (query1.finance.yahoo.com/v8/finance/chart)",
   "fx": {
-    "AUDUSD": 0.6976,
-    "AUDUSD_change_pct": 0.1723,
+    "AUDUSD": 0.6974,
+    "AUDUSD_change_pct": 0.1436,
     "USDSGD": 1.2808,
     "USDSGD_change_pct": 0.0899
   },
   "quotes": {
     "NU": {
-      "price": 15.38,
-      "previous_close": 15.58,
-      "change_pct": -1.2837,
+      "price": 15.56,
+      "previous_close": 15.38,
+      "change_pct": 1.1704,
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "Nu Holdings Ltd.",
-      "market_time": "2026-10-08T20:00:02+00:00",
+      "market_time": "2026-10-09T13:45:33+00:00",
       "stale": false
     },
     "BOC.AX": {
@@ -49,63 +49,63 @@
       "stale": false
     },
     "ONON": {
-      "price": 34.04,
-      "previous_close": 33.220001,
-      "change_pct": 2.4684,
+      "price": 34.413,
+      "previous_close": 34.040001,
+      "change_pct": 1.0958,
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "On Holding AG",
-      "market_time": "2026-10-08T20:00:02+00:00",
+      "market_time": "2026-10-09T13:45:30+00:00",
       "stale": false
     },
     "IREN": {
-      "price": 35.71,
-      "previous_close": 38.689999,
-      "change_pct": -7.7022,
+      "price": 35.16,
+      "previous_close": 35.709999,
+      "change_pct": -1.5402,
       "currency": "USD",
       "exchange": "NasdaqGS",
       "long_name": "IREN Limited",
-      "market_time": "2026-10-08T20:00:01+00:00",
+      "market_time": "2026-10-09T13:45:35+00:00",
       "stale": false
     },
     "CCJ": {
-      "price": 87.12,
-      "previous_close": 89.07,
-      "change_pct": -2.1893,
+      "price": 87.101,
+      "previous_close": 87.120003,
+      "change_pct": -0.0218,
       "currency": "USD",
       "exchange": "NYSE",
       "long_name": "Cameco Corporation",
-      "market_time": "2026-10-08T20:00:02+00:00",
+      "market_time": "2026-10-09T13:45:02+00:00",
       "stale": false
     },
     "GOOG": {
-      "price": 344.86,
-      "previous_close": 347.369995,
-      "change_pct": -0.7226,
+      "price": 349.1,
+      "previous_close": 344.859985,
+      "change_pct": 1.2295,
       "currency": "USD",
       "exchange": "NasdaqGS",
       "long_name": "Alphabet Inc.",
-      "market_time": "2026-10-08T20:00:01+00:00",
+      "market_time": "2026-10-09T13:45:37+00:00",
       "stale": false
     },
     "TSLA": {
-      "price": 375.0,
-      "previous_close": 377.809998,
-      "change_pct": -0.7438,
+      "price": 386.8,
+      "previous_close": 375.0,
+      "change_pct": 3.1467,
       "currency": "USD",
       "exchange": "NasdaqGS",
       "long_name": "Tesla, Inc.",
-      "market_time": "2026-10-08T20:00:00+00:00",
+      "market_time": "2026-10-09T13:45:37+00:00",
       "stale": false
     },
     "AUDUSD=X": {
-      "price": 0.6976,
+      "price": 0.6974,
       "previous_close": 0.6964,
-      "change_pct": 0.1723,
+      "change_pct": 0.1436,
       "currency": "USD",
       "exchange": "CCY",
       "long_name": "AUD/USD",
-      "market_time": "2026-10-09T13:14:47+00:00",
+      "market_time": "2026-10-09T13:44:48+00:00",
       "stale": false
     },
     "SGD=X": {
@@ -115,7 +115,7 @@
       "currency": "SGD",
       "exchange": "CCY",
       "long_name": "USD/SGD",
-      "market_time": "2026-10-09T13:15:23+00:00",
+      "market_time": "2026-10-09T13:45:37+00:00",
       "stale": false
     }
   },
