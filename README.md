@@ -1,26 +1,27 @@
-# Boss's Portfolio — static tracker
+# Surabhi Industries — Portfolio site
 
-Static HTML/CSS/JS (no build step). The page reads two files:
+Static site for **Surabhi Industries Pte Ltd** (GitHub Pages).
 
-- `holdings.json` — **edit this** (also holds each company's full name, sector, industry, HQ, description and logo path; logos live in `logos/`, monogram used if missing) to change quantities, add/remove positions, or change the page title (`"title"`).
-  `symbol` is the Yahoo Finance symbol (ASX tickers use `.AX`, e.g. `EML.AX`).
-- `prices.json` — written by `update_prices.py` (Yahoo Finance chart API + AUDUSD and USDSGD FX). Don't edit by hand.
+## Pages
+- `index.html` — company home (Temasek-inspired full-bleed video hero, philosophy, focus, portfolio news)
+- `portfolio.html` — holdings dashboard (Temasek-style tracker)
+- `news.json` — auto-updated headlines (`update_news.py`, workflow every 3 hours)
+- `prices.json` — auto-updated quotes (`update_prices.py`)
 
-## Update prices
-    python3 update_prices.py        # standard library only
+## Hero video (licence)
+- **File:** `media/hero.mp4` + `media/hero.webm` (compressed), poster `media/hero-poster.jpg`
+- **Source:** [Pexels — Aerial view of the city (Penang skyline)](https://www.pexels.com/video/aerial-view-of-the-city-19968469/)
+- **Pexels ID:** 19968469 · Photographer/creator: **LayG Traveller**
+- **Licence:** [Pexels Licence](https://www.pexels.com/license/) — free to use for commercial and non-commercial purposes; no attribution required (attribution appreciated). No paid licence.
+- Compressed locally with ffmpeg (H.264 + VP9), muted, looped; each file under 8 MB.
 
-## View locally
-    python3 -m http.server 8000     # then open http://localhost:8000
-(Opening index.html directly as a file won't work: browsers block fetch() of local JSON.)
+## Edit holdings
+Edit `holdings.json` (title, wordmark, positions, logos). Logos live in `logos/`.
 
-## Share links
-- `?ccy=SGD` opens with SGD values (only USD/SGD are supported),
-- `?details=1` opens with every company's details expanded (tap a row to expand one), `?private=1` blurs dollar amounts (weights and % still show).
+## Local preview
+```bash
+python3 -m http.server 8765
+# open http://127.0.0.1:8765/
+```
 
-## Self-updating hosting (GitHub Pages + Actions, free)
-1. Create a GitHub repo and push this folder (including `.github/workflows/update.yml`).
-2. Repo Settings → Pages → Source: "Deploy from a branch" → `main` / root.
-3. Repo Settings → Actions → General → Workflow permissions: "Read and write".
-4. Actions tab → "Update prices" → Run workflow (first run). After that it runs every 30 min
-   during US and ASX market hours and commits `prices.json`, and Pages republishes.
-Note: a public Pages site is visible to anyone who has the URL (repo must be public on a free plan).
+Loader: ~2.5s count + 0.3s fade (≤3s total). `?noloader=1` skips; `?loaderPreview=57` freezes for screenshots. Loader timing is independent of hero video loading.

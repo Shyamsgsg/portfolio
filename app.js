@@ -1,4 +1,4 @@
-/* Shyam's Portfolio: reads holdings.json + prices.json (static) and renders the page. */
+/* Surabhi Industries Portfolio: reads holdings.json + prices.json (static) and renders the page. */
 (() => {
   const PALETTE = ["#d6006e", "#0069aa", "#5c2d6e", "#1bb2e6", "#cfc1d6", "#12a639", "#f39200", "#7a8b99", "#a3195b", "#00a19a", "#6d4c9f", "#9bbb59"];
   const ROWBG = { NYSE: "rgba(18,166,57,.1)", NASDAQ: "rgba(18,166,57,.1)", ASX: "rgba(214,0,110,.08)" };
@@ -62,7 +62,7 @@
     const { h, p, rows, total, dayUSD, dayPct, audusd, usdsgd } = state.data;
     const C = effCcy(), other = C === "USD" ? "SGD" : "USD";
     const title = h.title || "Portfolio";
-    document.title = title; $("#title").textContent = title; $("#crumbTitle").textContent = title;
+    document.title = "Surabhi Industries | " + title; $("#title").textContent = title; $("#crumbTitle").textContent = title;
     if (h.wordmark) { $("#wordmark").textContent = h.wordmark; $("#wordmark2").textContent = h.wordmark; $("#copy").textContent = "© " + (h.owner || h.wordmark); }
     document.body.classList.toggle("private", state.priv);
     $("#privacy").classList.toggle("on", state.priv);

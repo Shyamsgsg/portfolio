@@ -1,6 +1,6 @@
 {
-  "title": "Shyam's Portfolio",
-  "owner": "Shyam",
+  "title": "Portfolio",
+  "owner": "Surabhi Industries Pte Ltd",
   "base_currency": "USD",
   "_note": "Edit quantities here. 'symbol' is the Yahoo Finance symbol (ASX tickers use the .AX suffix). Company details (full_name, sector, industry, hq, description, logo) show on each tile; 'logo' is a file in logos/ (leave empty for a monogram). 'logo_scale' (0.5-1) shrinks bold square marks so all logos look balanced.",
   "holdings": [
@@ -149,7 +149,7 @@
       "description": "Designs and manufactures electric vehicles, battery energy storage and solar products, and is developing self-driving and humanoid-robot technology."
     }
   ],
-  "wordmark": "SHYAM",
+  "wordmark": "Surabhi Industries",
   "_note_cash": "Cash balances: add one entry per currency. 'amount' is in 'currency' (AUD, USD or SGD supported out of the box; any other ISO code is fetched as <CCY>USD=X by update_prices.py). Cash counts in totals and weights but has no price or day change.",
   "cash": [
     {

@@ -1,143 +1,174 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="loading">
 <head>
   <meta charset="utf-8" />
+  <script>window.__loaderStart=Date.now();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <!-- Change the title here AND in holdings.json ("title") -->
-  <title>Shyam's Portfolio</title>
-  <meta name="description" content="Holdings, allocation and daily performance." />
+  <title>Surabhi Industries</title>
+  <meta name="description" content="Surabhi Industries Pte Ltd — patient capital and long-term conviction across technology, energy &amp; resources, and fintech." />
   <meta name="theme-color" content="#21004f" />
-  <meta property="og:title" content="Shyam's Portfolio" />
-  <meta property="og:description" content="Holdings, allocation and daily performance." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2321004f'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'>S</text></svg>" />
+  <meta property="og:title" content="Surabhi Industries" />
+  <meta property="og:description" content="Patient capital. Long-term conviction." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2321004f'/><text x='32' y='42' font-size='28' text-anchor='middle' fill='white' font-family='Georgia,serif'>S</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;family=Roboto:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet" />
+
+  <style id="loader-critical">
+    html.loading,html.loading body{background:#21004f!important}
+    html.loading body>*:not(#site-loader){visibility:hidden!important}
+    #site-loader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+      background:#21004f;color:#fff;transition:opacity .3s ease,visibility .3s ease}
+    #site-loader.is-done{opacity:0;visibility:hidden;pointer-events:none}
+    #site-loader .loader-inner{text-align:center;width:min(420px,86vw);padding:24px}
+    #site-loader .loader-wordmark{font-family:Cinzel,"Times New Roman",serif;font-weight:600;font-size:clamp(22px,4vw,32px);
+      letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+    #site-loader .loader-sub{font-family:Roboto,Helvetica,Arial,sans-serif;font-size:13px;letter-spacing:.16em;
+      text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:28px}
+    #site-loader .loader-track{height:2px;background:rgba(255,255,255,.18);width:100%;overflow:hidden;margin-bottom:14px}
+    #site-loader .loader-bar{height:100%;width:0;background:#15af9b}
+    #site-loader .loader-pct{font-family:Roboto,Helvetica,Arial,sans-serif;font-size:28px;font-weight:500;letter-spacing:.04em;color:#fff}
+    @media (prefers-reduced-motion:reduce){
+      #site-loader{transition-duration:.15s}
+      #site-loader .loader-bar{transition:none}
+    }
+  </style>
+
+  <link rel="stylesheet" href="home.css" />
+  <script>
+    // Skip loader immediately when ?noloader=1 (preview/QA); avoids FOUC behind overlay.
+    if (/(?:^|[?&])noloader(?:=|&|$)/.test(location.search)) document.documentElement.classList.remove('loading');
+  </script>
 </head>
 <body>
-  <div class="band">
-    <header class="site-header">
-      <a class="wordmark" href="#top" id="wordmark">SHYAM</a>
-      <nav class="nav" aria-label="Sections">
-        <a href="#overview">Overview</a>
-        <a href="#highlights">Portfolio Highlights</a>
-        <a href="#holdings">Holdings</a>
-        <a href="#notes">Notes</a>
-      </nav>
-      <div class="tools">
-        <button id="privacy" class="icon-btn" title="Hide amounts" aria-label="Hide amounts">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-        </button>
-        <div class="ccy-switch" role="group" aria-label="Currency">
-          <button data-ccy="USD" class="on">USD</button>
-          <button class="knob" id="ccyKnob" aria-label="Toggle currency"><span></span></button>
-          <button data-ccy="SGD">SGD</button>
-        </div>
-      </div>
-    </header>
+
+  <div id="site-loader" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading">
+    <div class="loader-inner">
+      <div class="loader-wordmark">Surabhi Industries</div>
+      <div class="loader-sub">Portfolio</div>
+      <div class="loader-track"><div id="loader-bar" class="loader-bar"></div></div>
+      <div id="loader-pct" class="loader-pct">0%</div>
+    </div>
   </div>
+  <script src="loader.js"></script>
 
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span>/</span><a href="#holdings">Investments</a><span>/</span><span class="cur" id="crumbTitle">Shyam's Portfolio</span></nav>
 
-  <main class="content" id="top">
-    <section id="overview" class="title-row">
-      <button class="share" id="share" title="Share" aria-label="Share">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="17" cy="5.5" r="2.6"/><circle cx="6.5" cy="12" r="2.6"/><circle cx="17" cy="18.5" r="2.6"/><path d="M8.6 10.8l6.3-3.9M8.6 13.2l6.3 3.9" stroke="currentColor" stroke-width="1.6"/></svg>
-      </button>
-      <h1 id="title">Shyam's Portfolio</h1>
-      <p class="lede">A concentrated portfolio of global growth, technology, energy and resources companies listed in the US and Australia, tracked with live market prices.</p>
-      <div class="notebox">
-        <p>Unless otherwise stated, values are presented in <b id="noteCcy">US dollars</b>; switch to <span id="noteOther">Singapore dollars</span> with the currency toggle above. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
-        Last updated <span id="noteUpdated">—</span>.</p>
-      </div>
-    </section>
+  <header class="home-header">
+    <a class="brand" href="index.html">Surabhi Industries</a>
+    <nav class="home-nav" aria-label="Primary">
+      <a href="portfolio.html">Portfolio</a>
+      <a class="btn-nav" href="portfolio.html">View Portfolio</a>
+    </nav>
+  </header>
 
-    <section id="highlights">
-      <h2>Portfolio Highlights</h2>
-      <p class="sub-lede">As at <span id="asAt">—</span>, the net portfolio value was <a class="dotted money" id="totalLink" href="#holdings">—</a><span class="money" id="totalOther"></span>.</p>
-
-      <div class="figures">
-        <div class="fig"><p class="fig-l">Total value (USD)</p><p class="fig-v money" id="totUSD">—</p></div>
-        <div class="fig"><p class="fig-l">Total value (SGD)</p><p class="fig-v money" id="totSGD">—</p></div>
-        <div class="fig"><p class="fig-l">Day change</p><p class="fig-v" id="dayChg">—</p></div>
-        <div class="fig"><p class="fig-l">Positions</p><p class="fig-v" id="nPos">—</p></div>
-      </div>
-
-      <div class="tabs" role="tablist" id="tabs">
-        <button role="tab" data-g="holding" class="selected">Holding</button>
-        <button role="tab" data-g="sector">Sector</button>
-        <button role="tab" data-g="hq">Headquarters</button>
-        <button role="tab" data-g="exchange">Exchange</button>
-        <button role="tab" data-g="currency">Currency</button>
-      </div>
-      <p class="as-at" id="chartAsAt">(as at —)</p>
-
-      <div class="chart">
-        <div class="donut-wrap">
-          <svg id="donut" viewBox="0 0 240 240" role="img" aria-label="Allocation chart"></svg>
-          <div class="donut-center"><span id="dcLabel">Holding</span><span>(%)</span></div>
-        </div>
-        <table class="legend">
-          <thead><tr><th></th><th class="num">Value</th><th class="num hl">Weight</th></tr></thead>
-          <tbody id="legend"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="holdings">
-      <h2 class="h2-lg">Holdings</h2>
-      <div class="sources" id="notes">
-        <div>
-          <p class="b">Sources:</p>
-          <ol>
-            <li>Prices and FX rates from Yahoo Finance; US prices in USD, ASX prices in AUD.</li>
-            <li>Company information from company filings and websites. Tap a row for details.</li>
-          </ol>
-        </div>
-        <div>
-          <p class="b">Glossary:</p>
-          <p>NYSE = New York Stock Exchange<br>NASDAQ = Nasdaq Stock Market<br>ASX = Australian Securities Exchange<br>HALTED = No recent trades; valued at last price</p>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table class="holdings" id="htable">
-          <thead>
-            <tr>
-              <th class="c-logo sticky">Logo</th>
-              <th class="c-name sticky2 sort" data-k="name">Name</th>
-              <th class="num sort" data-k="quantity">Quantity</th>
-              <th class="num sort" data-k="price">Latest Price<br><span class="th-sub">(local currency)</span></th>
-              <th class="num sort" data-k="usd" id="thValue">Value<br><span class="th-sub">(US$)</span></th>
-              <th class="num sort" data-k="pct">Day<br><span class="th-sub">(%)</span></th>
-              <th class="num sort" data-k="weight">Weight<br><span class="th-sub">(%)</span></th>
-              <th class="sort" data-k="sector">Sector</th>
-              <th class="sort" data-k="exchange">Exchange</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-      <p class="hint">Tap any row for company details. Click a column heading to sort.</p>
-
-      <div class="footnote" id="footnote"></div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="foot-top">
-      <span class="wordmark" id="wordmark2">SHYAM</span>
-      <a class="sitemap" href="#top">BACK TO TOP <span class="circ"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 15l6-6 6 6"/></svg></span></a>
+  <section class="hero" id="top" aria-label="Introduction">
+    <div class="hero-media" style="background-image:url('media/hero-poster.jpg')">
+      <video autoplay muted loop playsinline preload="metadata" poster="media/hero-poster.jpg" aria-hidden="true">
+        <source src="media/hero.webm" type="video/webm" />
+        <source src="media/hero.mp4" type="video/mp4" />
+      </video>
     </div>
-    <div class="foot-cols">
-      <div><h3>This page</h3><a href="#overview">Overview</a><a href="#highlights">Portfolio Highlights</a><a href="#holdings">Holdings</a><a href="#notes">Sources &amp; Glossary</a></div>
-      <div><h3>Last updated</h3><p>Pacific Time</p><p class="t" id="tPT">—</p><p>Port Moresby</p><p class="t" id="tPOM">—</p></div>
-      <div><h3>Markets</h3><p id="mkts">NYSE · NASDAQ · ASX</p><p id="fxLine">—</p></div>
-      <div><h3>Share</h3><a href="?ccy=USD">View in USD</a><a href="?ccy=SGD">View in SGD</a><a href="?private=1">Private view (amounts hidden)</a></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="hero-kicker">Surabhi Industries Pte Ltd</p>
+      <h1>Surabhi Industries</h1>
+      <p class="hero-tag">Patient capital. Long-term conviction.</p>
+      <a class="btn-hero" href="portfolio.html">View Portfolio</a>
     </div>
-    <div class="foot-bar"><span>Prices may be delayed</span><span>Not investment advice</span><span>Data: Yahoo Finance</span><span id="copy">© Shyam</span></div>
+    <a class="hero-scroll" href="#philosophy" aria-label="Scroll to content">
+      <span>Scroll</span><span class="chev" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <section class="section" id="philosophy">
+    <div class="section-inner">
+      <h2>Philosophy</h2>
+      <p class="lead">We favour concentrated ownership of quality businesses, held with patience through market cycles. Capital is deployed where durable advantages, capable management and sensible valuation align.</p>
+      <div class="cards-3">
+        <article class="card">
+          <h3>Long-term</h3>
+          <p>Investment horizons measured in years, not quarters — compounding requires time and discipline.</p>
+        </article>
+        <article class="card">
+          <h3>Concentrated</h3>
+          <p>A focused book of high-conviction positions rather than a diluted index of ideas.</p>
+        </article>
+        <article class="card">
+          <h3>Research-led</h3>
+          <p>Decisions grounded in business fundamentals, industry structure and capital allocation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="focus">
+    <div class="section-inner">
+      <h2>Focus</h2>
+      <p class="lead">Primary themes guiding the portfolio across listed markets.</p>
+      <div class="cards-3">
+        <article class="card">
+          <h3>Technology</h3>
+          <p>Platforms, infrastructure and digital businesses with scalable economics.</p>
+        </article>
+        <article class="card">
+          <h3>Energy &amp; Resources</h3>
+          <p>Critical commodities and energy systems that underpin industrial growth.</p>
+        </article>
+        <article class="card">
+          <h3>Fintech</h3>
+          <p>Modern financial rails and consumer platforms reshaping access to capital.</p>
+        </article>
+      </div>
+      <div class="pillars" style="margin-top:28px" aria-label="Markets">
+        <span class="pill">Markets: US</span>
+        <span class="pill">Markets: ASX</span>
+        <span class="pill">NYSE · NASDAQ · ASX</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="insights">
+    <div class="section-inner">
+      <h2>Portfolio News</h2>
+      <p class="lead">Recent headlines on companies we hold. Headlines and links only — updated automatically from public news feeds.</p>
+      <div class="news-toolbar">
+        <div id="news-filters" aria-label="Filter by company"></div>
+        <span class="news-meta" id="news-updated"></span>
+      </div>
+      <div class="news-grid" id="news-grid">
+        <p class="news-empty">Loading headlines…</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="home-footer">
+    <div class="home-footer-inner">
+      <a class="brand" href="index.html">Surabhi Industries</a>
+      <div class="home-footer-grid">
+        <div>
+          <h4>About</h4>
+          <p>Surabhi Industries Pte Ltd manages a concentrated public-markets portfolio with a long-term investment philosophy.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <p><a href="portfolio.html">Portfolio</a></p>
+          <p><a href="#insights">Portfolio News</a></p>
+          <p><a href="#philosophy">Philosophy</a></p>
+        </div>
+        <div>
+          <h4>Markets</h4>
+          <p>NYSE · NASDAQ · ASX</p>
+          <p>Values shown in USD / SGD</p>
+        </div>
+      </div>
+      <div class="home-foot-bar">
+        <span>© Surabhi Industries Pte Ltd</span>
+        <span>Not investment advice</span>
+        <span>News headlines from public feeds; may be delayed</span>
+      </div>
+    </div>
   </footer>
-  <script src="app.js"></script>
+
+  <script src="home.js"></script>
 </body>
 </html>
