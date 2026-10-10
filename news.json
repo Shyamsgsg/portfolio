@@ -1,6 +1,28 @@
 {
-  "updated": "2026-10-10T08:11:55Z",
+  "updated": "2026-10-10T08:38:12Z",
   "items": [
+    {
+      "id": "7a0010cdafdacd55",
+      "ticker": "TSLA",
+      "symbol": "TSLA",
+      "company": "Tesla",
+      "title": "Solana’s New Addresses Surge 124% While SOL Price Drops 9%. What’s Going On?",
+      "link": "https://247wallst.com/investing/cryptocurrency/2026/10/10/solanas-new-addresses-surge-124-while-sol-price-drops-9-whats-going-on/?.tsrc=rss",
+      "source": "News",
+      "published": "2026-10-10T08:21:34+00:00",
+      "logo": "logos/TSLA.svg"
+    },
+    {
+      "id": "8bb5f676d71e1bef",
+      "ticker": "TSLA",
+      "symbol": "TSLA",
+      "company": "Tesla",
+      "title": "Tesla Drops “Full Self-Driving” in Europe, Where Its Revenue Fell 10% Last Year",
+      "link": "https://www.tikr.com/blog/tesla-drops-full-self-driving-in-europe-where-its-revenue-fell-10-last-year?ref=yahoofinance&.tsrc=rss",
+      "source": "News",
+      "published": "2026-10-10T06:52:58+00:00",
+      "logo": "logos/TSLA.svg"
+    },
     {
       "id": "d749d685eab0d75a",
       "ticker": "GOOG",
@@ -65,28 +87,6 @@
       "link": "https://www.cryptoprowl.com/releases/weekly-wrap-rising-treasury-yields-sink-bitcoin-7288?.tsrc=rss",
       "source": "News",
       "published": "2026-10-09T20:52:00+00:00",
-      "logo": "logos/TSLA.svg"
-    },
-    {
-      "id": "c38e8caf73efb90f",
-      "ticker": "TSLA",
-      "symbol": "TSLA",
-      "company": "Tesla",
-      "title": "Jim Cramer On SpaceX (SPCX): Buy Tesla (TSLA) If You Like It As An Earnings Explosion Might Be Coming",
-      "link": "https://finance.yahoo.com/technology/ai/articles/jim-cramer-spacex-spcx-buy-225214489.html?.tsrc=rss",
-      "source": "News",
-      "published": "2026-10-09T20:22:14+00:00",
-      "logo": "logos/TSLA.svg"
-    },
-    {
-      "id": "d586db84ba65844d",
-      "ticker": "TSLA",
-      "symbol": "TSLA",
-      "company": "Tesla",
-      "title": "Tesla is one of the 'clearest ways to own physical AI,' analyst says",
-      "link": "https://finance.yahoo.com/markets/article/tesla-is-one-of-the-clearest-ways-to-own-physical-ai-analyst-says-192223905.html?.tsrc=rss",
-      "source": "News",
-      "published": "2026-10-09T19:22:23+00:00",
       "logo": "logos/TSLA.svg"
     },
     {
@@ -343,14 +343,14 @@
       "logo": "logos/EML.svg"
     },
     {
-      "id": "8efcc3ead6afa6d2",
+      "id": "8a5da30ec073805f",
       "ticker": "EML",
       "symbol": "EML.AX",
       "company": "EML Payments",
-      "title": "Eml Payments Stock Price Forecast. Should You Buy EML.AX? - StockInvest.us",
-      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFA1ZXNkWk9HdmI5dTVjQlJGTG9WNjlhUW1NbzJIejVHWEhhc0p5QkNKV1RrUnVMd25EVWNMcnVnOGhmNVo4a21nSHRMUQ?oc=5",
-      "source": "StockInvest.us",
-      "published": "2026-09-25T07:51:29+00:00",
+      "title": "EML Payments: Intention to Cease Coverage - Morningstar",
+      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNX3A2aVg1YnFwenJxa28zRkE2MEhESGtIeUZUTzhGWDk5ZnoyRG1ZMzM5ZXNFUkxLVHoyT0hib0FvSnBjV0NJZE1TSDdxN3pjblBwQklac3lmQjFYcW5JZzE4elE0V2J4OWtaemI0NEp2elRjd2RtUkk5WlpfNGJTSG9UWDNsRENuXzNuQUpscW5zOU1hQkhN?oc=5",
+      "source": "Morningstar",
+      "published": "2026-09-21T07:00:00+00:00",
       "logo": "logos/EML.svg"
     },
     {
