@@ -1,3 +1,5 @@
 *.png
+!media/*.png
+!media/**/*.png
 __pycache__/
 ref/
