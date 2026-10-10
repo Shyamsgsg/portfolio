@@ -10,10 +10,11 @@ Static site for **Surabhi Industries Pte Ltd** (GitHub Pages).
 
 ## Hero video (licence)
 - **File:** `media/hero.mp4` + `media/hero.webm` (compressed), poster `media/hero-poster.jpg`
-- **Source:** [Pexels — Aerial view of the city (Penang skyline)](https://www.pexels.com/video/aerial-view-of-the-city-19968469/)
-- **Pexels ID:** 19968469 · Photographer/creator: **LayG Traveller**
-- **Licence:** [Pexels Licence](https://www.pexels.com/license/) — free to use for commercial and non-commercial purposes; no attribution required (attribution appreciated). No paid licence.
+- **Source:** [Pexels — View of city in timelapse mode (Singapore Marina Bay)](https://www.pexels.com/video/view-of-city-in-timelapse-mode-1824697/)
+- **Pexels ID:** 1824697 · Creator: **Thet Tun Aung**
+- **Licence:** [Pexels Licence](https://www.pexels.com/license/) — free for commercial and non-commercial use; no attribution required (attribution appreciated).
 - Compressed locally with ffmpeg (H.264 + VP9), muted, looped; each file under 8 MB.
+- Overlay: subtle black gradient only (no purple/blue colour tint).
 
 ## Edit holdings
 Edit `holdings.json` (title, wordmark, positions, logos). Logos live in `logos/`.
@@ -24,4 +25,4 @@ python3 -m http.server 8765
 # open http://127.0.0.1:8765/
 ```
 
-Loader: ~2.5s count + 0.3s fade (≤3s total). `?noloader=1` skips; `?loaderPreview=57` freezes for screenshots. Loader timing is independent of hero video loading.
+Loader: 0–100% (~2.5s + 0.3s fade) on **portfolio.html only** (not on the home page). `?noloader=1` / `?loaderPreview=57` for QA.

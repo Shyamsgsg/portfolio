@@ -17,7 +17,7 @@ video{display:block}
   position:absolute;top:0;left:0;right:0;z-index:30;
   display:flex;align-items:center;justify-content:space-between;
   padding:22px 48px;color:#fff;
-  background:linear-gradient(180deg, rgba(33,0,79,.45) 0%, rgba(33,0,79,0) 100%);
+  background:linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
 }
 .home-header .brand{
   font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.12em;
@@ -42,7 +42,7 @@ video{display:block}
 .hero{
   position:relative;min-height:100vh;min-height:100dvh;
   display:flex;align-items:flex-end;justify-content:flex-start;
-  color:#fff;padding:0;overflow:hidden;background:#21004f;
+  color:#fff;padding:0;overflow:hidden;background:#0a0a0a;
 }
 .hero-media{
   position:absolute;inset:0;z-index:0;
@@ -53,10 +53,12 @@ video{display:block}
 }
 .hero-overlay{
   position:absolute;inset:0;z-index:1;pointer-events:none;
+  /* Natural colours: no purple/blue tint — subtle black wash for text only */
   background:
-    linear-gradient(180deg, rgba(33,0,79,.35) 0%, rgba(33,0,79,.15) 35%, rgba(21,2,47,.72) 100%),
-    linear-gradient(90deg, rgba(33,0,79,.45) 0%, rgba(33,0,79,.05) 55%, transparent 100%);
+    linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.08) 40%, rgba(0,0,0,.38) 100%),
+    linear-gradient(105deg, rgba(0,0,0,.32) 0%, rgba(0,0,0,.12) 42%, transparent 68%);
 }
+
 .hero-inner{
   position:relative;z-index:2;max-width:920px;
   padding:0 48px 96px;text-align:left;
