@@ -211,3 +211,9 @@ body.private .money,body.private td.mval{filter:blur(7px);user-select:none}
   color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);
   border-color:rgba(255,255,255,.12);margin-top:8px;
 }
+
+/* philosophy block (founder note + principles) placed after Highlights */
+.philosophy{padding-top:40px}
+.philosophy .founder-note{margin-top:0}
+.philosophy .principles{margin-bottom:8px}
+@media (max-width:600px){.philosophy{padding-top:28px}.philosophy .principles{gap:12px}}
