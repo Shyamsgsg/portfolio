@@ -181,3 +181,16 @@ video{display:block}
   .news-meta{margin-left:0;width:100%}
   .section{padding:56px 18px}
 }
+
+
+/* Legal disclosure — clear, small, readable */
+.legal-disclosure{
+  font-size:12.5px;line-height:1.5;color:var(--muted,#5d6669);
+  max-width:72ch;margin:18px 0 28px;padding:14px 16px;
+  background:#f7f5f1;border:1px solid #e8e2d6;border-radius:2px;
+}
+.foot-disclosure{margin:0 0 18px;max-width:none}
+.home-footer .legal-disclosure,.home-footer .foot-disclosure{
+  color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.12);margin-top:8px;
+}
