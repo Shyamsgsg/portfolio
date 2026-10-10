@@ -3,7 +3,7 @@
   "owner": "Surabhi Industries Pte Ltd",
   "base_currency": "USD",
   "_note": "Public company metadata only. Quantities are private (GitHub Actions secret HOLDINGS_PRIVATE; box copy at ../portfolio-tracker-private/holdings.json) and compute_portfolio.py publishes only weights and % performance to portfolio.json. 'symbol' is the Yahoo Finance symbol (ASX tickers use the .AX suffix). 'logo' is a file in logos/; 'logo_scale' (0.5-1) shrinks bold square marks. A ticker with zero private quantity is hidden automatically.",
-  "display": {
+  "display": {"history_since_inception": true, 
     "show_values": false,
     "_note": "Set show_values to true to publish and display dollar values, quantities and the USD/SGD toggle again (then re-run the Update prices workflow)."
   },
