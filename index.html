@@ -2,138 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#FBF8F1" />
   <title>Surabhi Industries</title>
-  <meta name="description" content="Surabhi Industries Pte Ltd — patient capital and long-term conviction across technology, energy &amp; resources, and fintech." />
-  <meta name="theme-color" content="#21004f" />
-  <meta property="og:title" content="Surabhi Industries" />
-  <meta property="og:description" content="Patient capital. Long-term conviction." />
-  <link rel="apple-touch-icon" href="media/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="media/favicon.png" />
-  <link rel="icon" href="media/emblem-s.svg" type="image/svg+xml" />
+  <link rel="icon" href="/media/emblem-s.svg" type="image/svg+xml" />
+  <link rel="icon" href="/media/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/media/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&amp;family=Roboto:ital,wght@0,400;0,500;0,700;1,400&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="home.css?v=20261010-2" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root{--gold:#C9A24B;--gold-d:#8F6E28;--ink:#2a2a28;--muted:#8a8378;--cream:#FBF8F1}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
+      background:radial-gradient(ellipse at 50% 38%,#FFFFFF 0%,var(--cream) 62%,#F5EFE2 100%);
+      color:var(--ink);font-family:Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;text-align:center;
+    }
+    main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px}
+    .mark{width:88px;height:88px;margin-bottom:34px;opacity:0;animation:rise 1.4s ease .1s forwards}
+    h1{
+      font-family:Cinzel,"Times New Roman",serif;font-weight:600;
+      font-size:clamp(26px,5.2vw,44px);letter-spacing:.16em;text-transform:uppercase;
+      color:var(--ink);line-height:1.15;padding-left:.16em;
+      opacity:0;animation:rise 1.4s ease .35s forwards;
+    }
+    .rule{
+      width:64px;height:1px;margin:28px auto 26px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+      opacity:0;animation:fade 1.6s ease .7s forwards;
+    }
+    .status{
+      font-family:Cinzel,"Times New Roman",serif;font-weight:400;
+      font-size:clamp(13px,2.4vw,16px);letter-spacing:.32em;text-transform:uppercase;
+      color:var(--gold-d);padding-left:.32em;
+      opacity:0;animation:fade 1.6s ease .9s forwards;
+    }
+    footer{
+      padding:0 24px 34px;font-size:12px;font-weight:300;letter-spacing:.14em;
+      color:var(--muted);opacity:0;animation:fade 1.6s ease 1.2s forwards;
+    }
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @keyframes fade{to{opacity:1}}
+    @media (max-width:480px){
+      .mark{width:72px;height:72px;margin-bottom:28px}
+      h1{letter-spacing:.12em;padding-left:.12em}
+      .status{letter-spacing:.24em;padding-left:.24em}
+      footer{font-size:11px;letter-spacing:.1em}
+    }
+    @media (prefers-reduced-motion:reduce){.mark,h1,.rule,.status,footer{animation:none;opacity:1}}
+  </style>
 </head>
 <body>
-
-<header class="home-header">
-    <a class="brand" href="index.html"><img class="emblem" src="media/emblem-s.svg" alt="" width="28" height="28"><span>Surabhi Industries</span></a>
-    <nav class="home-nav" aria-label="Primary">
-      <a href="portfolio.html">Portfolio</a>
-      <a class="btn-nav" href="portfolio.html">View Portfolio</a>
-    </nav>
-  </header>
-
-  <section class="hero" id="top" aria-label="Introduction">
-    <div class="hero-media" style="background-image:url('media/hero-marina-poster.jpg')">
-      <video autoplay muted loop playsinline preload="none" poster="media/hero-marina-poster.jpg" aria-hidden="true"></video>
-    </div>
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <p class="hero-kicker">Surabhi Industries Pte Ltd</p>
-      <h1>Surabhi Industries</h1>
-      <p class="hero-tag">Patient capital. Long-term conviction.</p>
-      <a class="btn-hero" href="portfolio.html">View Portfolio</a>
-    </div>
-    <a class="hero-scroll" href="#philosophy" aria-label="Scroll to content">
-      <span>Scroll</span><span class="chev" aria-hidden="true"></span>
-    </a>
-  </section>
-
-  <section class="section" id="philosophy">
-    <div class="section-inner">
-      <h2>Philosophy</h2>
-      <p class="lead">We favour concentrated ownership of quality businesses, held with patience through market cycles. Capital is deployed where durable advantages, capable management and sensible valuation align.</p>
-      <div class="cards-3">
-        <article class="card">
-          <h3>Long-term</h3>
-          <p>Investment horizons measured in years, not quarters — compounding requires time and discipline.</p>
-        </article>
-        <article class="card">
-          <h3>Concentrated</h3>
-          <p>A focused book of high-conviction positions rather than a diluted index of ideas.</p>
-        </article>
-        <article class="card">
-          <h3>Research-led</h3>
-          <p>Decisions grounded in business fundamentals, industry structure and how each business allocates its resources.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section alt" id="focus">
-    <div class="section-inner">
-      <h2>Focus</h2>
-      <p class="lead">Primary themes in the companies we own across listed markets.</p>
-      <div class="cards-3">
-        <article class="card">
-          <h3>Technology</h3>
-          <p>Platforms, infrastructure and digital businesses with scalable economics.</p>
-        </article>
-        <article class="card">
-          <h3>Energy &amp; Resources</h3>
-          <p>Critical commodities and energy systems that underpin industrial growth.</p>
-        </article>
-        <article class="card">
-          <h3>Fintech</h3>
-          <p>Modern financial rails and consumer platforms reshaping how people and businesses bank and pay.</p>
-        </article>
-      </div>
-      <div class="pillars" style="margin-top:28px" aria-label="Markets">
-        <span class="pill">Markets: US</span>
-        <span class="pill">Markets: ASX</span>
-        <span class="pill">NYSE · NASDAQ · ASX</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="insights">
-    <div class="section-inner">
-      <h2>Portfolio News</h2>
-      <p class="lead">Recent headlines on companies we hold. Headlines and links only — updated automatically from public news feeds.</p>
-      <div class="news-toolbar">
-        <div id="news-filters" aria-label="Filter by company"></div>
-        <span class="news-meta" id="news-updated"></span>
-      </div>
-      <div class="news-grid" id="news-grid">
-        <p class="news-empty">Loading headlines…</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="home-footer">
-    <div class="home-footer-inner">
-      <a class="brand" href="index.html"><img class="emblem" src="media/emblem-s.svg" alt="" width="26" height="26"><span>Surabhi Industries</span></a>
-      <div class="home-footer-grid">
-        <div>
-          <h4>About</h4>
-          <p>Surabhi Industries Pte Ltd manages a concentrated public-markets portfolio with a long-term investment philosophy.</p>
-          <p class="legal-disclosure">Surabhi Industries Pte Ltd is a private holding company that invests only its own capital. We do not manage, accept or invest money on behalf of any third party, and we are not a fund, fund manager or licensed investment adviser. This site is for information only and is not investment advice or an offer of any kind.</p>
-        </div>
-        <div>
-          <h4>Explore</h4>
-          <p><a href="portfolio.html">Portfolio</a></p>
-          <p><a href="#insights">Portfolio News</a></p>
-          <p><a href="#philosophy">Philosophy</a></p>
-        </div>
-        <div>
-          <h4>Markets</h4>
-          <p>NYSE · NASDAQ · ASX</p>
-          <p>Values shown in USD / SGD</p>
-        </div>
-      </div>
-      <p class="legal-disclosure foot-disclosure">Surabhi Industries Pte Ltd is a private holding company that invests only its own capital. We do not manage, accept or invest money on behalf of any third party, and we are not a fund, fund manager or licensed investment adviser. This site is for information only and is not investment advice or an offer of any kind.</p>
-      <div class="home-foot-bar">
-        <span>Surabhi Industries Pte Ltd · Singapore</span>
-        <span>© 2026 Surabhi Industries Pte Ltd</span>
-        <span>Holdings and values may be delayed.</span>
-        <span><a href="index.html">Home</a> · <a href="portfolio.html">Portfolio</a></span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="home.js?v=20261010-2"></script>
+  <main>
+    <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="Surabhi Industries monogram">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#E0C36A"/>
+          <stop offset="45%" stop-color="#C9A24B"/>
+          <stop offset="100%" stop-color="#8F6E28"/>
+        </linearGradient>
+      </defs>
+      <rect x="3.5" y="3.5" width="57" height="57" rx="10" fill="none" stroke="url(#g)" stroke-width="1.4"/>
+      <rect x="8" y="8" width="48" height="48" rx="7" fill="none" stroke="url(#g)" stroke-width="0.6" opacity="0.55"/>
+      <text x="32" y="43" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="600" fill="url(#g)">S</text>
+    </svg>
+    <h1>Surabhi Industries</h1>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="status">Website under development</p>
+  </main>
+  <footer>Surabhi Industries Pte Ltd &middot; Singapore</footer>
 </body>
 </html>
