@@ -5,7 +5,7 @@
   <script>window.__loaderStart=Date.now();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Surabhi Industries | Portfolio</title>
-  <meta name="description" content="Surabhi Industries portfolio — holdings, allocation and daily performance." />
+  <meta name="description" content="Surabhi Industries portfolio — holdings, allocation and performance." />
   <meta name="theme-color" content="#21004f" />
   <meta property="og:title" content="Surabhi Industries | Portfolio" />
   <meta property="og:description" content="Surabhi Industries portfolio — holdings, allocation and daily performance." />
@@ -63,10 +63,10 @@
         <a href="#notes">Notes</a>
       </nav>
       <div class="tools">
-        <button id="privacy" class="icon-btn" title="Hide amounts" aria-label="Hide amounts">
+        <button id="privacy" class="icon-btn vals-only" title="Hide amounts" aria-label="Hide amounts">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
-        <div class="ccy-switch" role="group" aria-label="Currency">
+        <div class="ccy-switch vals-only" role="group" aria-label="Currency">
           <button data-ccy="USD" class="on">USD</button>
           <button class="knob" id="ccyKnob" aria-label="Toggle currency"><span></span></button>
           <button data-ccy="SGD">SGD</button>
@@ -85,20 +85,37 @@
       <h1 id="title">Portfolio</h1>
       <p class="lede">A concentrated portfolio of global growth, technology, energy and resources companies listed in the US and Australia, tracked with live market prices.</p>
       <div class="notebox">
-        <p>Unless otherwise stated, values are presented in <b id="noteCcy">US dollars</b>; switch to <span id="noteOther">Singapore dollars</span> with the currency toggle above. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
+        <p class="novals-only">Weightings are based on market value in US dollars, and performance is measured in US dollars from 10 October 2026. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
+        Last updated <span id="noteUpdated2">—</span>.</p>
+        <p class="vals-only">Unless otherwise stated, values are presented in <b id="noteCcy">US dollars</b>; switch to <span id="noteOther">Singapore dollars</span> with the currency toggle above. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
         Last updated <span id="noteUpdated">—</span>.</p>
       </div>
     </section>
 
     <section id="highlights">
       <h2>Portfolio Highlights</h2>
-      <p class="sub-lede">As at <span id="asAt">—</span>, the net portfolio value was <a class="dotted money" id="totalLink" href="#holdings">—</a><span class="money" id="totalOther"></span>.</p>
+      <p class="sub-lede vals-only">As at <span id="asAt">—</span>, the net portfolio value was <a class="dotted money" id="totalLink" href="#holdings">—</a><span class="money" id="totalOther"></span>.</p>
+      <p class="sub-lede novals-only">As at <span id="asAt2">—</span>, the portfolio held <a class="dotted" id="nHeld" href="#holdings">—</a>.</p>
 
-      <div class="figures">
+      <div class="figures vals-only">
         <div class="fig"><p class="fig-l">Total value (USD)</p><p class="fig-v money" id="totUSD">—</p></div>
         <div class="fig"><p class="fig-l">Total value (SGD)</p><p class="fig-v money" id="totSGD">—</p></div>
         <div class="fig"><p class="fig-l">Day change</p><p class="fig-v" id="dayChg">—</p></div>
         <div class="fig"><p class="fig-l">Positions</p><p class="fig-v" id="nPos">—</p></div>
+      </div>
+
+      <div class="perf" id="perf" aria-label="Performance">
+        <div class="perf-head"><h3>Performance</h3><span>US$ · time-weighted · from 10 Oct 2026</span></div>
+        <div class="figures perf-figs" id="perfFigs">
+          <div class="fig"><p class="fig-l" id="pfSinceL">Since 10 Oct 2026</p><p class="fig-v" id="pfSince">—</p><p class="fig-b" id="pfSinceB"></p></div>
+          <div class="fig"><p class="fig-l" id="pfYtdL">YTD 2026</p><p class="fig-v" id="pfYtd">—</p><p class="fig-b" id="pfYtdB"></p></div>
+          <div class="fig"><p class="fig-l">Today</p><p class="fig-v" id="pfDay">—</p><p class="fig-b" id="pfDayB"></p></div>
+          <div class="fig novals-only"><p class="fig-l">Positions</p><p class="fig-v" id="nPos2">—</p><p class="fig-b">Listed companies</p></div>
+        </div>
+        <figure class="perf-chart" id="perfChart" hidden>
+          <svg id="perfSvg" viewBox="0 0 900 150" preserveAspectRatio="none" role="img" aria-label="Performance index, base 100"></svg>
+          <figcaption><span class="k k-p"></span>Portfolio <span class="k k-s"></span>S&amp;P 500 <span class="perf-range" id="perfRange"></span></figcaption>
+        </figure>
       </div>
 
       <div class="tabs" role="tablist" id="tabs">
@@ -116,7 +133,7 @@
           <div class="donut-center"><span id="dcLabel">Holding</span><span>(%)</span></div>
         </div>
         <table class="legend">
-          <thead><tr><th></th><th class="num">Value</th><th class="num hl">Weight</th></tr></thead>
+          <thead><tr><th></th><th class="num vals-only">Value</th><th class="num hl">Weight</th></tr></thead>
           <tbody id="legend"></tbody>
         </table>
       </div>
@@ -156,9 +173,9 @@
             <tr>
               <th class="c-logo sticky">Logo</th>
               <th class="c-name sticky2 sort" data-k="name">Name</th>
-              <th class="num sort" data-k="quantity">Quantity</th>
+              <th class="num sort vals-only" data-k="quantity">Quantity</th>
               <th class="num sort" data-k="price">Latest Price<br><span class="th-sub">(local currency)</span></th>
-              <th class="num sort" data-k="usd" id="thValue">Value<br><span class="th-sub">(US$)</span></th>
+              <th class="num sort vals-only" data-k="usd" id="thValue">Value<br><span class="th-sub">(US$)</span></th>
               <th class="num sort" data-k="pct">Day<br><span class="th-sub">(%)</span></th>
               <th class="num sort" data-k="weight">Weight<br><span class="th-sub">(%)</span></th>
               <th class="sort" data-k="sector">Sector</th>
@@ -183,7 +200,8 @@
       <div><h3>This page</h3><a href="index.html">Home</a><a href="#overview">Overview</a><a href="#highlights">Portfolio Highlights</a><a href="#holdings">Holdings</a><a href="#notes">Sources &amp; Glossary</a></div>
       <div><h3>Last updated</h3><p>Pacific Time</p><p class="t" id="tPT">—</p><p>Port Moresby</p><p class="t" id="tPOM">—</p></div>
       <div><h3>Markets</h3><p id="mkts">NYSE · NASDAQ · ASX</p><p id="fxLine">—</p></div>
-      <div><h3>Share</h3><a href="?ccy=USD">View in USD</a><a href="?ccy=SGD">View in SGD</a><a href="?private=1">Private view (amounts hidden)</a></div>
+      <div class="novals-only"><h3>Records</h3><a href="history.csv">Performance history (CSV)</a><a href="portfolio.json">Weights &amp; performance (JSON)</a></div>
+      <div class="vals-only"><h3>Share</h3><a href="?ccy=USD">View in USD</a><a href="?ccy=SGD">View in SGD</a><a href="?private=1">Private view (amounts hidden)</a></div>
     </div>
     <p class="legal-disclosure foot-disclosure">Surabhi Industries Pte Ltd is a private holding company that invests only its own capital. We do not manage, accept or invest money on behalf of any third party, and we are not a fund, fund manager or licensed investment adviser. This site is for information only and is not investment advice or an offer of any kind.</p>
     <div class="foot-bar"><span>Surabhi Industries Pte Ltd · Singapore</span><span>© 2026 Surabhi Industries Pte Ltd</span><span>Holdings and values may be delayed.</span><span><a href="index.html">Home</a> · <a href="portfolio.html">Portfolio</a></span></div>

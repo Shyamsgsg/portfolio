@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch latest quotes for every holding in holdings.json (plus AUDUSD/USDSGD FX and any cash-currency FX)
+"""Fetch latest quotes for every holding in holdings.json (plus AUDUSD/USDSGD FX, any cash-currency FX and the S&P 500)
 from Yahoo Finance's public chart API and write prices.json for the web page.
 
 Usage:  python3 update_prices.py
@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent
 HOLDINGS = ROOT / "holdings.json"
 OUT = ROOT / "prices.json"
 FX_SYMBOLS = {"AUDUSD": "AUDUSD=X", "USDSGD": "SGD=X"}  # AUDUSD = USD per AUD; USDSGD = SGD per USD
+BENCHMARKS = ["^GSPC"]  # S&P 500, used for performance comparison (compute_portfolio.py)
 STALE_DAYS = 4  # last trade older than this => flagged as halted/stale
 # Yahoo rate-limits (429) many full browser/curl UAs; the bare "Mozilla/5.0" works reliably.
 UAS = ["Mozilla/5.0", "Mozilla/5.0 (compatible; portfolio-tracker/1.0)"]
@@ -99,7 +100,7 @@ def main():
         ccy = str(c.get("currency", "")).upper()
         if ccy and ccy not in ("USD", "AUD", "SGD"):
             FX_SYMBOLS[f"{ccy}USD"] = f"{ccy}USD=X"
-    symbols = [h["symbol"] for h in cfg.get("holdings", [])] + list(FX_SYMBOLS.values())
+    symbols = [h["symbol"] for h in cfg.get("holdings", [])] + list(FX_SYMBOLS.values()) + BENCHMARKS
     for sym in symbols:
         try:
             quotes[sym] = parse_quote(fetch_chart(sym))

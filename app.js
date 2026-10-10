@@ -1,4 +1,6 @@
-/* Surabhi Industries Portfolio: reads holdings.json + prices.json (static) and renders the page. */
+/* Surabhi Industries Portfolio: reads holdings.json (metadata) + prices.json + portfolio.json (weights/performance,
+   computed by the workflow from private quantities) and renders the page.
+   holdings.json display.show_values=false hides all dollar values / quantities / the currency toggle. */
 (() => {
   const PALETTE = ["#d6006e", "#0069aa", "#5c2d6e", "#1bb2e6", "#cfc1d6", "#12a639", "#f39200", "#7a8b99", "#a3195b", "#00a19a", "#6d4c9f", "#9bbb59"];
   const ROWBG = { NYSE: "rgba(18,166,57,.1)", NASDAQ: "rgba(18,166,57,.1)", ASX: "rgba(214,0,110,.08)" };
@@ -24,20 +26,24 @@
 
   async function load() {
     const bust = "?t=" + Date.now();
-    const [h, p] = await Promise.all([fetch("holdings.json" + bust).then((r) => r.json()), fetch("prices.json" + bust).then((r) => r.json())]);
+    const [h, p, pf] = await Promise.all(["holdings.json", "prices.json", "portfolio.json"].map((f) => fetch(f + bust).then((r) => r.json())));
+    const showValues = !!(h.display?.show_values && pf.show_values && pf.values);
+    const qty = showValues ? pf.values.quantities || {} : {};
+    const wts = pf.weights || {};
     const audusd = p.fx?.AUDUSD || 0.66, usdsgd = p.fx?.USDSGD || null;
     const toUSD = { USD: 1, AUD: audusd, ...(usdsgd ? { SGD: 1 / usdsgd } : {}) };
-    const rows = h.holdings.map((x) => {
+    const rows = h.holdings.filter((x) => wts[x.ticker] != null).map((x) => {
+      x = { ...x, quantity: showValues ? qty[x.ticker] ?? null : null };
       const q = p.quotes?.[x.symbol] || {};
       const ccy = q.currency || (x.symbol.endsWith(".AX") ? "AUD" : "USD");
-      const price = q.price ?? null, local = price != null ? price * x.quantity : null;
+      const price = q.price ?? null, local = price != null && x.quantity != null ? price * x.quantity : null;
       const usd = local != null ? local * (toUSD[ccy] ?? 1) : null, pct = q.change_pct ?? null;
       const dayUSD = usd != null && pct != null ? usd - usd / (1 + pct / 100) : 0;
       return { ...x, ccy, price, local, usd, pct, dayUSD, stale: !!q.stale, missing: price == null };
     });
-    [...rows].sort((a, b) => (b.usd || 0) - (a.usd || 0)).forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
+    [...rows].sort((a, b) => wts[b.ticker] - wts[a.ticker]).forEach((r, i) => (r.color = PALETTE[i % PALETTE.length]));
     // Cash balances (holdings.json "cash"): face value, converted at live FX; no price and no day change.
-    (h.cash || []).forEach((c) => {
+    (showValues ? h.cash || [] : []).forEach((c) => {
       const ccy = String(c.currency || "USD").toUpperCase(), amount = Number(c.amount) || 0;
       const rate = ccy === "USD" ? 1 : ccy === "AUD" ? audusd : ccy === "SGD" ? (usdsgd ? 1 / usdsgd : null) : p.fx?.[ccy + "USD"] ?? null;
       rows.push({
@@ -49,9 +55,10 @@
       });
     });
     const total = rows.reduce((a, r) => a + (r.usd || 0), 0), dayUSD = rows.reduce((a, r) => a + r.dayUSD, 0);
-    rows.forEach((r) => (r.weight = total ? ((r.usd || 0) / total) * 100 : 0));
+    rows.forEach((r) => (r.weight = showValues ? (total ? ((r.usd || 0) / total) * 100 : 0) : wts[r.ticker] || 0));
     if (qs.has("details")) state.open = new Set(rows.map((r) => r.ticker));
-    state.data = { h, p, rows, total, dayUSD, dayPct: total ? (dayUSD / (total - dayUSD)) * 100 : 0, audusd, usdsgd };
+    if (!showValues && state.sortK === "usd") state.sortK = "weight";
+    state.data = { h, p, pf, showValues, rows, total, dayUSD, dayPct: total ? (dayUSD / (total - dayUSD)) * 100 : 0, audusd, usdsgd };
     render();
   }
 
@@ -59,7 +66,9 @@
   const conv = (usd, c = effCcy()) => (usd == null ? null : usd * (c === "SGD" ? state.data.usdsgd : 1));
 
   function render() {
-    const { h, p, rows, total, dayUSD, dayPct, audusd, usdsgd } = state.data;
+    const { h, p, pf, showValues, rows, total, dayUSD, dayPct, audusd, usdsgd } = state.data;
+    document.body.classList.toggle("no-values", !showValues);
+    if (!showValues) state.priv = false;
     const C = effCcy(), other = C === "USD" ? "SGD" : "USD";
     const title = h.title || "Portfolio";
     document.title = "Surabhi Industries | " + title; $("#title").textContent = title; $("#crumbTitle").textContent = title;
@@ -84,8 +93,8 @@
     const o = { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" };
     const pt = d.toLocaleString("en-US", { ...o, timeZone: "America/Vancouver" }) + " PT";
     const pom = d.toLocaleString("en-US", { ...o, timeZone: "Pacific/Port_Moresby" }) + " (Port Moresby)";
-    $("#noteUpdated").textContent = `${pt} / ${pom}`;
-    $("#asAt").textContent = pt;
+    $("#noteUpdated").textContent = $("#noteUpdated2").textContent = `${pt} / ${pom}`;
+    $("#asAt").textContent = $("#asAt2").textContent = pt;
     $("#chartAsAt").textContent = `(as at ${d.toLocaleString("en-US", { day: "numeric", month: "short", year: "numeric", timeZone: "America/Vancouver" })})`;
     $("#tPT").textContent = d.toLocaleString("en-US", { ...o, timeZone: "America/Vancouver" }) + " PT";
     $("#tPOM").textContent = d.toLocaleString("en-US", { ...o, timeZone: "Pacific/Port_Moresby" }) + " PGT";
@@ -96,7 +105,9 @@
     $("#totSGD").textContent = usdsgd ? fmt(conv(total, "SGD"), "SGD", 0) : "—";
     $("#dayChg").innerHTML = `<span class="${cls(dayPct)}">${fmtPct(dayPct)}%</span> <small class="money ${cls(dayPct)}">${dayUSD >= 0 ? "+" : ""}${esc(fmt(conv(dayUSD), C, 0))}</small>`;
     const nStocks = rows.filter((r) => !r.isCash).length, hasCash = rows.some((r) => r.isCash);
-    $("#nPos").innerHTML = nStocks + (hasCash ? ` <small>+ cash</small>` : "");
+    $("#nPos").innerHTML = $("#nPos2").innerHTML = nStocks + (hasCash ? ` <small>+ cash</small>` : "");
+    $("#nHeld").textContent = `${nStocks} listed companies`;
+    renderPerf(pf.performance, showValues);
     $("#fxLine").textContent = `USD/SGD ${usdsgd ? usdsgd.toFixed(4) : "—"} · AUD/USD ${audusd.toFixed(4)}`;
     $("#thValue").innerHTML = `Value<br><span class="th-sub">(${C === "SGD" ? "S$" : "US$"})</span>`;
 
@@ -111,6 +122,31 @@
     if (missing.length) notes.push(`${missing.join(", ")}: price currently unavailable.`);
     notes.push("Weights are based on market value in US dollars. Percentages are rounded to one decimal place and may not add up to 100.");
     $("#footnote").innerHTML = notes.map((n, i) => `<p><sup>${i + 1}</sup> ${esc(n)}</p>`).join("");
+  }
+
+  const fmtD = (iso, y = true) => new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", ...(y ? { year: "numeric" } : {}), timeZone: "UTC" });
+  function renderPerf(pp, showValues) {
+    if (!pp) { $("#perf").hidden = true; return; }
+    $("#perf").hidden = false;
+    $("#perfFigs").classList.toggle("n3", showValues);
+    const pv = (el, v) => ($(el).innerHTML = `<span class="${cls(v)}">${fmtPct(v)}%</span>`);
+    const bm = (el, v) => ($(el).innerHTML = v == null ? "" : `S&amp;P 500 <b class="${cls(v)}">${fmtPct(v)}%</b>`);
+    $("#pfSinceL").textContent = "Since " + fmtD(pp.inception_date);
+    $("#pfYtdL").textContent = "YTD " + pp.ytd_year;
+    pv("#pfSince", pp.since_inception_pct); bm("#pfSinceB", pp.spx_since_inception_pct);
+    pv("#pfYtd", pp.ytd_pct); bm("#pfYtdB", pp.spx_ytd_pct);
+    pv("#pfDay", pp.day_pct); bm("#pfDayB", pp.spx_day_pct);
+    const s = (pp.series || []).filter((r) => r[1] != null);
+    $("#perfChart").hidden = s.length < 2;
+    if (s.length < 2) return;
+    const vals = s.flatMap((r) => [r[1], r[2]]).filter((v) => v != null).concat([100]);
+    let lo = Math.min(...vals), hi = Math.max(...vals); const pad = Math.max((hi - lo) * 0.12, 0.5); lo -= pad; hi += pad;
+    const X = (i) => (i / (s.length - 1)) * 900, Y = (v) => 150 - ((v - lo) / (hi - lo)) * 150;
+    const line = (k) => s.map((r, i) => (r[k] == null ? null : `${X(i).toFixed(1)},${Y(r[k]).toFixed(1)}`)).filter(Boolean).join(" ");
+    $("#perfSvg").innerHTML = `<line x1="0" x2="900" y1="${Y(100).toFixed(1)}" y2="${Y(100).toFixed(1)}" stroke="#d9d2c0" stroke-width="1" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>
+      <polyline points="${line(2)}" fill="none" stroke="#9aa3a6" stroke-width="1.5" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>
+      <polyline points="${line(1)}" fill="none" stroke="#21004f" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+    $("#perfRange").textContent = `Index, base 100 · ${fmtD(s[0][0])} – ${fmtD(s[s.length - 1][0])}`;
   }
 
   function groups() {
@@ -142,7 +178,7 @@
       a += sw;
     });
     $("#donut").innerHTML = svg;
-    $("#legend").innerHTML = gs.map((g) => `<tr data-k="${esc(g.key)}"><td><span class="dot" style="background:${g.color}"></span>${esc(g.label)}</td><td class="num v money">${esc(fmt(conv(g.usd), C, 0))}</td><td class="num hl">${wtxt(g.weight)}</td></tr>`).join("");
+    $("#legend").innerHTML = gs.map((g) => `<tr data-k="${esc(g.key)}"><td><span class="dot" style="background:${g.color}"></span>${esc(g.label)}</td><td class="num v money vals-only">${esc(fmt(conv(g.usd), C, 0))}</td><td class="num hl">${wtxt(g.weight)}</td></tr>`).join("");
     const hl = (k) => {
       $("#donut").classList.toggle("hovering", !!k);
       document.querySelectorAll("#donut path").forEach((p) => p.classList.toggle("hl", p.dataset.k === k));
@@ -171,15 +207,15 @@
       return `<tr class="r${open ? " open" : ""}" data-t="${esc(r.ticker)}" style="--rowbg:${bg}" tabindex="0" aria-expanded="${open}">
         <td class="c-logo sticky"><div class="logo">${logoHTML(r)}</div></td>
         <td class="c-name sticky2"><div class="nm">${esc(r.full_name || r.name)}&nbsp;<span class="caret">▼</span></div><div class="tk">${r.isCash ? esc(r.ccy) + " balance" : esc(r.ticker)} ${badge}</div></td>
-        <td class="num">${r.isCash ? "—" : r.quantity.toLocaleString("en-US")}</td>
+        <td class="num vals-only">${r.isCash || r.quantity == null ? "—" : r.quantity.toLocaleString("en-US")}</td>
         <td class="num">${r.isCash ? "—" : `${esc(fmt(r.price, r.ccy))}<span class="sub">${r.ccy}</span>`}</td>
-        <td class="num mval">${esc(fmt(conv(r.usd), C))}${r.ccy !== C ? `<span class="sub">${esc(fmt(r.local, r.ccy))}</span>` : ""}</td>
+        <td class="num mval vals-only">${esc(fmt(conv(r.usd), C))}${r.ccy !== C ? `<span class="sub">${esc(fmt(r.local, r.ccy))}</span>` : ""}</td>
         <td class="num ${r.isCash ? "flat" : cls(r.pct)}">${r.isCash ? "—" : fmtPct(r.pct)}</td>
         <td class="num">${wtxt(r.weight)}</td>
         <td>${esc(r.sector || "")}</td>
         <td>${r.isCash ? "—" : esc(r.exchange)}</td>
       </tr>
-      <tr class="d" style="--rowbg:${bg}" ${open ? "" : "hidden"}><td colspan="9"><div class="din">
+      <tr class="d" style="--rowbg:${bg}" ${open ? "" : "hidden"}><td colspan="${state.data.showValues ? 9 : 7}"><div class="din">
         <p class="desc">${esc(r.description || "")}</p>
         <dl>${r.industry ? `<dt>Industry</dt><dd>${esc(r.industry)}</dd>` : ""}${where ? `<dt>HQ</dt><dd>${esc(where)}</dd>` : ""}${r.isCash ? `<dt>Balance</dt><dd class="money">${esc(fmt(r.local, r.ccy, 0))} ${esc(r.ccy)}</dd>${r.rate ? `<dt>FX rate</dt><dd>${esc(r.ccy)}/USD ${r.rate.toFixed(4)}</dd>` : ""}` : `<dt>Listing</dt><dd>${esc(r.exchange)}: ${esc(r.ticker)}</dd>`}${r.website ? `<dt>Website</dt><dd><a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\/(www\.)?/, ""))}</a></dd>` : ""}</dl>
       </div></td></tr>`;

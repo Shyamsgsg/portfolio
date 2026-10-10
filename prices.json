@@ -117,6 +117,16 @@
       "long_name": "USD/SGD",
       "market_time": "2026-10-10T04:21:11+00:00",
       "stale": false
+    },
+    "^GSPC": {
+      "price": 7811.54,
+      "previous_close": 7765.359863,
+      "change_pct": 0.5947,
+      "currency": "USD",
+      "exchange": "SNP",
+      "long_name": "S&P 500",
+      "market_time": "2026-10-09T21:29:56+00:00",
+      "stale": false
     }
   },
   "errors": []

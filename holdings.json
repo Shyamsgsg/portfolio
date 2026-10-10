@@ -2,14 +2,17 @@
   "title": "Portfolio",
   "owner": "Surabhi Industries Pte Ltd",
   "base_currency": "USD",
-  "_note": "Edit quantities here. 'symbol' is the Yahoo Finance symbol (ASX tickers use the .AX suffix). Company details (full_name, sector, industry, hq, description, logo) show on each tile; 'logo' is a file in logos/ (leave empty for a monogram). 'logo_scale' (0.5-1) shrinks bold square marks so all logos look balanced.",
+  "_note": "Public company metadata only. Quantities are private (GitHub Actions secret HOLDINGS_PRIVATE; box copy at ../portfolio-tracker-private/holdings.json) and compute_portfolio.py publishes only weights and % performance to portfolio.json. 'symbol' is the Yahoo Finance symbol (ASX tickers use the .AX suffix). 'logo' is a file in logos/; 'logo_scale' (0.5-1) shrinks bold square marks. A ticker with zero private quantity is hidden automatically.",
+  "display": {
+    "show_values": false,
+    "_note": "Set show_values to true to publish and display dollar values, quantities and the USD/SGD toggle again (then re-run the Update prices workflow)."
+  },
   "holdings": [
     {
       "ticker": "NU",
       "symbol": "NU",
       "name": "Nu Holdings",
       "exchange": "NYSE",
-      "quantity": 2600,
       "full_name": "Nu Holdings Ltd.",
       "sector": "Financials",
       "industry": "Digital banking",
@@ -25,7 +28,6 @@
       "symbol": "BOC.AX",
       "name": "Bougainville Copper",
       "exchange": "ASX",
-      "quantity": 912,
       "full_name": "Bougainville Copper Limited",
       "sector": "Materials",
       "industry": "Copper & gold mining",
@@ -41,7 +43,6 @@
       "symbol": "EML.AX",
       "name": "EML Payments",
       "exchange": "ASX",
-      "quantity": 181000,
       "full_name": "EML Payments Limited",
       "sector": "Financials",
       "industry": "Payments & fintech",
@@ -57,7 +58,6 @@
       "symbol": "GTK.AX",
       "name": "Gentrack Group",
       "exchange": "ASX",
-      "quantity": 13700,
       "full_name": "Gentrack Group Limited",
       "sector": "Information Technology",
       "industry": "Utility & airport software",
@@ -73,7 +73,6 @@
       "symbol": "ONON",
       "name": "On Holding",
       "exchange": "NYSE",
-      "quantity": 2260,
       "full_name": "On Holding AG",
       "sector": "Consumer Discretionary",
       "industry": "Athletic footwear & apparel",
@@ -89,7 +88,6 @@
       "symbol": "IREN",
       "name": "IREN Ltd",
       "exchange": "NASDAQ",
-      "quantity": 1600,
       "full_name": "IREN Limited",
       "sector": "Information Technology",
       "industry": "AI cloud & data centres",
@@ -105,7 +103,6 @@
       "symbol": "CCJ",
       "name": "Cameco",
       "exchange": "NYSE",
-      "quantity": 376,
       "full_name": "Cameco Corporation",
       "sector": "Energy",
       "industry": "Uranium & nuclear fuel",
@@ -121,7 +118,6 @@
       "symbol": "GOOG",
       "name": "Alphabet (Class C)",
       "exchange": "NASDAQ",
-      "quantity": 81,
       "full_name": "Alphabet Inc. (Class C)",
       "sector": "Communication Services",
       "industry": "Internet, cloud & AI",
@@ -137,7 +133,6 @@
       "symbol": "TSLA",
       "name": "Tesla",
       "exchange": "NASDAQ",
-      "quantity": 281,
       "full_name": "Tesla, Inc.",
       "sector": "Consumer Discretionary",
       "industry": "Electric vehicles & energy",
@@ -149,7 +144,5 @@
       "description": "Designs and manufactures electric vehicles, battery energy storage and solar products, and is developing self-driving and humanoid-robot technology."
     }
   ],
-  "wordmark": "Surabhi Industries",
-  "_note_cash": "Cash balances: add one entry per currency. 'amount' is in 'currency' (AUD, USD or SGD supported out of the box; any other ISO code is fetched as <CCY>USD=X by update_prices.py). Cash counts in totals and weights but has no price or day change.",
-  "cash": []
+  "wordmark": "Surabhi Industries"
 }
