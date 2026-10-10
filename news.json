@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10T07:03:53Z",
+  "updated": "2026-10-10T08:11:55Z",
   "items": [
     {
       "id": "d749d685eab0d75a",
@@ -123,6 +123,17 @@
       "logo": "logos/CCJ.svg"
     },
     {
+      "id": "afb3f294099adfc2",
+      "ticker": "BOC",
+      "symbol": "BOC.AX",
+      "company": "Bougainville Copper",
+      "title": "BOC Hong Kong stock at EUR 5.66: analyst target sits 16.5 percent higher - AD HOC NEWS",
+      "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPejBXX011bDV1OEhHZ3hESWpIbUJydFhSc3ZfZ3NoMmlyUFNBeHFPVzhYd1k3czFqRjBvY0pMZE9yNDVDbWtyM1NfeGM2WU1jOWxkX1BiQ3doQTUzQ0lCVlhfd2lqRThoUEg4ZmtBMGNHZ0pCOWNXOXZKRGZvWXFOZVQ1WG5hN09Oa0hrVUNQT3BiNFBIQUpDQVlMekVGZ1BTYmIxdnI5X1pyaXUzeE9jMTlMQ2syaE8wZFgtS1RFSjd1UV9ubUpEcXkzUGwxWFk?oc=5",
+      "source": "AD HOC NEWS",
+      "published": "2026-10-09T13:50:53+00:00",
+      "logo": "logos/BOC.svg"
+    },
+    {
       "id": "ed6ae2330fd8dc8c",
       "ticker": "IREN",
       "symbol": "IREN",
@@ -132,6 +143,28 @@
       "source": "News",
       "published": "2026-10-09T11:50:00+00:00",
       "logo": "logos/IREN.svg"
+    },
+    {
+      "id": "711310173cc0c18f",
+      "ticker": "BOC",
+      "symbol": "BOC.AX",
+      "company": "Bougainville Copper",
+      "title": "TSX rallies as weak jobs reading curbs BoC rate hike bets; telecoms tumble as SpaceX emerges as new competitive threat - The Globe and Mail",
+      "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxNUHRpc0xuRzNvMkRCbmd1bWFYWW9DVVI5UnFrakM1eTRfZXJITFdmbUZUR05FbXN1N0V0RVRTQlUzNzBwc0tNOTQzQjlPdHpJQ3FWbEo5b0FUUmFURkl6QThkS3ZVbm01MHFHaXBlNkdyTXB3RGpRX0t6bTAzdmlyMXZ6V2s1WGNiNHZsdGpNTGxLN3UzVUFHUVVWb1FKSHdBR0hZUVZkTmpFSnhSOXllMExHU2pTRm9kVHIxMGJ5NC1SdDEtcEVtNnlGd1dJRFRmZklDdktjN3YtQWJTSV80MWplWUM4TFJwaDBkMnh5SQ?oc=5",
+      "source": "The Globe and Mail",
+      "published": "2026-10-09T10:58:40+00:00",
+      "logo": "logos/BOC.svg"
+    },
+    {
+      "id": "d1405068a2d37915",
+      "ticker": "BOC",
+      "symbol": "BOC.AX",
+      "company": "Bougainville Copper",
+      "title": "Citi raises target for BOC Hong Kong stock from HKD 56.50 to HKD 57.90 - AD HOC NEWS",
+      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOWDJYUGdDWXlSMzM5OWpfakhwSm4tUUFVS2ZFanBHZ3QtSVVQTGFrV18yUjNzV2RyLUtGcGFuN1F5YmNCYk5KTEJ2UEZrWmE0RmwyY1lyYVByNmY0VTJ6dlQ2YmFqSDJIc1d4TFpES1M1OVg0VGw3a2lkMThaV1dyMGRVTkxiNUdlWlYtM2k5TkRSR3Y1WjlnVmd5ZFprS2tzMjVDTnR1bUE4TTVzVGlUdFZlTU16aDRfQmVDcWVSM2Q4RUtXWWFtdTdtSVhyQQ?oc=5",
+      "source": "AD HOC NEWS",
+      "published": "2026-10-09T09:46:22+00:00",
+      "logo": "logos/BOC.svg"
     },
     {
       "id": "8b509fd4b8f1cb30",
@@ -165,6 +198,17 @@
       "source": "News",
       "published": "2026-10-09T07:12:35+00:00",
       "logo": "logos/NU.svg"
+    },
+    {
+      "id": "94a108413e5bf44b",
+      "ticker": "BOC",
+      "symbol": "BOC.AX",
+      "company": "Bougainville Copper",
+      "title": "BOC Hong Kong stock pre-market: EUR 5.63, plus 2.18 percent - AD HOC NEWS",
+      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxORlJTMFhqVExBaXFWOXFnVENtRlRLd3FiRHM4bU16c3U4TEpKOTRDY3ZtYTVibnduOXZWTnFBc0xfMHdmcFc0MVVsOGs0SEM1aXpaSHNiRGdld3NPVmVGY09HOWRyTXZVTUFHLWZFbG1YYmJ0Ti1IUWpwaDR6alJ2Z011NE1ScmxhclJkQWx1Q1QxbGppcHZBT21Uc3k4LUFjSEVjN2dlTTZGd3FNRjFWbzFieE1Bdw?oc=5",
+      "source": "AD HOC NEWS",
+      "published": "2026-10-09T05:59:41+00:00",
+      "logo": "logos/BOC.svg"
     },
     {
       "id": "2df5e2ae587c9424",
@@ -266,14 +310,47 @@
       "logo": "logos/ONON.svg"
     },
     {
-      "id": "82faac77c93d21ca",
+      "id": "1bc24815f4f8706c",
       "ticker": "EML",
       "symbol": "EML.AX",
       "company": "EML Payments",
-      "title": "EML Payments Ltd (EMCHF) (FY 2026) Earnings Call Highlights: Restructuring Gains Traction, but ...",
-      "link": "https://finance.yahoo.com/markets/stocks/articles/eml-payments-ltd-emchf-fy-070207032.html?.tsrc=rss",
-      "source": "News",
-      "published": "2026-08-18T07:02:07+00:00",
+      "title": "EML Payments Applies to Quote 625,000 Ordinary Shares Issued Under Employee Incentive Scheme - Kalkine",
+      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOWTJlNVpybVhfTXF4b2sxLWtJcF9QYUZfTjBmVGVmRWVyTkdOeHhCVTNmbEJXRmdoMlBOaUJlVmU1V2JOU09CRkt0NC1BUUtULU0zZG81WkFwMERYTzJqR2M2RFQ3ZkY4OWZaRjhJTElnNW1ZWDhFWnk3Rzg0cGRWOXhaNjlwTUI4T0k2aGFsS08weU5aMW1QbTBjdzZGNUdkaGhPUUtjRnhpNzN6Y1B4VmwtN0xKLU5Xc21HQ0h1WG1CaTdLc0Y4WTh0WENTdw?oc=5",
+      "source": "Kalkine",
+      "published": "2026-10-02T10:25:09+00:00",
+      "logo": "logos/EML.svg"
+    },
+    {
+      "id": "fc5ab76c118e8996",
+      "ticker": "EML",
+      "symbol": "EML.AX",
+      "company": "EML Payments",
+      "title": "Trading Systems Reacting to (EML) Volatility - Stock Traders Daily",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQdUtNRHhjOEpiZ2ZTS0VNZHRzWnpnVnNfRTNGck9ReklJdkNwQUtYVHd3SU9XbUQ5V2dLc3lGNlpYV0MxazIwZ3dqRS1hUkxUZW9HVlZFa0xUaGZ2UThyeG9zNUdrVlMyODl1a0JtbTEyQThBWC0yWHd4NWkxS3U1WG9TWVd4a0JaRWVrX1pJN1hKN0JOLUZZNktINl83MVZRN0xWT2E2QXZZVkhvOHhwVXhZOW9yTjBoR0dpSFNnQQ?oc=5",
+      "source": "Stock Traders Daily",
+      "published": "2026-10-01T07:44:02+00:00",
+      "logo": "logos/EML.svg"
+    },
+    {
+      "id": "a05d8218031ada53",
+      "ticker": "EML",
+      "symbol": "EML.AX",
+      "company": "EML Payments",
+      "title": "The Eastern Co (EML) Stock Down 3.0% -- Now Undervalued? GF Scor - GuruFocus",
+      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOMEQwMS03NGFhV0ZySTJYVFp6cFMtdXN4bFo3b1V1QWpmdHl5dHFVWFNNaXRlSFpHeGpmT1hlNmRtVFdIUURNakZXbG9JRXNTMHpnUVBzSDBzVzRNNkpGRnFNZVRoNHQ5ZVVremR4OXBtb2lJdVpXTmRvUHJDZ3NtQ2xieHo0c29tUFBWNElib3EzVEp0WGQ0SGdjOGQwWGZaZzlpMw?oc=5",
+      "source": "GuruFocus",
+      "published": "2026-09-29T23:33:41+00:00",
+      "logo": "logos/EML.svg"
+    },
+    {
+      "id": "8efcc3ead6afa6d2",
+      "ticker": "EML",
+      "symbol": "EML.AX",
+      "company": "EML Payments",
+      "title": "Eml Payments Stock Price Forecast. Should You Buy EML.AX? - StockInvest.us",
+      "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFA1ZXNkWk9HdmI5dTVjQlJGTG9WNjlhUW1NbzJIejVHWEhhc0p5QkNKV1RrUnVMd25EVWNMcnVnOGhmNVo4a21nSHRMUQ?oc=5",
+      "source": "StockInvest.us",
+      "published": "2026-09-25T07:51:29+00:00",
       "logo": "logos/EML.svg"
     },
     {
@@ -310,17 +387,6 @@
       "logo": "logos/GTK.svg"
     },
     {
-      "id": "51478188ad7b2413",
-      "ticker": "EML",
-      "symbol": "EML.AX",
-      "company": "EML Payments",
-      "title": "EML Payments Ltd (EMCHF) (H1 2026) Earnings Call Highlights: Navigating Challenges with ...",
-      "link": "https://finance.yahoo.com/news/eml-payments-ltd-emchf-h1-050155642.html?.tsrc=rss",
-      "source": "News",
-      "published": "2026-02-25T05:01:55+00:00",
-      "logo": "logos/EML.svg"
-    },
-    {
       "id": "857288e414271aa8",
       "ticker": "GTK",
       "symbol": "GTK.AX",
@@ -330,17 +396,6 @@
       "source": "News",
       "published": "2026-02-19T04:40:26+00:00",
       "logo": "logos/GTK.svg"
-    },
-    {
-      "id": "69e8b73aceff5c2c",
-      "ticker": "EML",
-      "symbol": "EML.AX",
-      "company": "EML Payments",
-      "title": "Those who invested in EML Payments (ASX:EML) three years ago are up 83%",
-      "link": "https://finance.yahoo.com/news/those-invested-eml-payments-asx-205503864.html?.tsrc=rss",
-      "source": "News",
-      "published": "2025-10-28T20:55:03+00:00",
-      "logo": "logos/EML.svg"
     }
   ]
 }
