@@ -22,6 +22,7 @@ holdings in effect for that session (quantities held at the prior close), so buy
 look like gains or losses. Trades dated D only take effect after session D:
 holdings_for(D) = current quantities - sum(qty_change of trades dated >= D).
 Session date = UTC date of (now + 2h): one ASX session + the following US session share a date.
+Weekend runs map to Friday, and a new date is only added when prices moved (holidays add nothing).
 """
 from __future__ import annotations
 
@@ -59,7 +60,12 @@ def load_private() -> dict:
 
 
 def session_date(now: datetime) -> str:
-    return (now + timedelta(hours=2)).date().isoformat()
+    """Trading-session date: UTC date of (now + 2h). Weekend runs map back to Friday, so a weekend
+    price refresh can only update Friday's record and never adds a non-trading-day point."""
+    d = (now + timedelta(hours=2)).date()
+    if d.weekday() >= 5:
+        d -= timedelta(days=d.weekday() - 4)
+    return d.isoformat()
 
 
 def holdings_for(date: str, priv: dict) -> dict:
@@ -117,6 +123,10 @@ def main() -> int:
     today = session_date(now)
     perf = json.loads(PERF.read_text()) if PERF.exists() else {"inception": INCEPTION, "currency": "USD", "records": []}
     recs = perf["records"]
+    # one record per session date (keep the latest), in date order
+    recs = list({r["date"]: r for r in recs}.values())
+    recs.sort(key=lambda r: r["date"])
+    perf["records"] = recs
     if not recs:
         recs.append({"date": INCEPTION, "index": 100.0, "spx": spx, "audusd": audusd, "usdsgd": usdsgd, "prices": snap, "base": True})
     elif today > recs[-1]["date"] or (recs[-1]["date"] == today and not recs[-1].get("base")):

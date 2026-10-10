@@ -112,9 +112,28 @@
           <div class="fig"><p class="fig-l">Today</p><p class="fig-v" id="pfDay">—</p><p class="fig-b" id="pfDayB"></p></div>
           <div class="fig novals-only"><p class="fig-l">Positions</p><p class="fig-v" id="nPos2">—</p><p class="fig-b">Listed companies</p></div>
         </div>
-        <figure class="perf-chart" id="perfChart" hidden>
-          <svg id="perfSvg" viewBox="0 0 900 150" preserveAspectRatio="none" role="img" aria-label="Performance index, base 100"></svg>
-          <figcaption><span class="k k-p"></span>Portfolio <span class="k k-s"></span>S&amp;P 500 <span class="perf-range" id="perfRange"></span></figcaption>
+        <figure class="pchart" id="pChart" aria-labelledby="pcTitle">
+          <div class="pc-top">
+            <div>
+              <h3 class="pc-title" id="pcTitle">Portfolio performance</h3>
+              <p class="pc-label" id="pcLabel">Total return since 10 Oct 2026</p>
+              <p class="pc-big" id="pcBig">—</p>
+              <p class="pc-bench" id="pcBench"></p>
+            </div>
+            <div class="pc-legend">
+              <span class="pc-key"><i class="sw sw-p"></i>Surabhi portfolio</span>
+              <button type="button" class="pc-key pc-toggle" id="pcSpx" aria-pressed="true"><i class="sw sw-s"></i>S&amp;P 500</button>
+            </div>
+          </div>
+          <div class="pc-plot" id="pcPlot">
+            <svg id="pcSvg" role="img" aria-label="Portfolio performance versus S&amp;P 500, percent change since 10 Oct 2026"></svg>
+            <div class="pc-tip" id="pcTip" hidden></div>
+          </div>
+          <p class="pc-note" id="pcNote" hidden>Tracking began 10 Oct 2026; the chart builds daily.</p>
+          <div class="pc-pills" id="pcPills" role="group" aria-label="Chart range">
+            <button type="button" data-r="1W">1W</button><button type="button" data-r="MTD">MTD</button><button type="button" data-r="1M">1M</button><button type="button" data-r="3M">3M</button><button type="button" data-r="YTD">YTD</button><button type="button" data-r="1Y">1Y</button><button type="button" data-r="ALL">All</button>
+          </div>
+          <figcaption class="pc-cap" id="pcCap">Time-weighted, in US dollars, rebased to 0% at the 10 Oct 2026 close. S&amp;P 500 price index for comparison. Past performance is not a guide to the future.</figcaption>
         </figure>
       </div>
 
