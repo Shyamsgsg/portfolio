@@ -71,7 +71,7 @@
         else el.textContent = h.wordmark;
       };
       setWm($("#wordmark")); setWm($("#wordmark2"));
-      $("#copy").textContent = "© 2026 " + (h.owner || h.wordmark);
+      { const c = $("#copy"); if (c) c.textContent = "© 2026 " + (h.owner || h.wordmark); }
     }
     document.body.classList.toggle("private", state.priv);
     $("#privacy").classList.toggle("on", state.priv);
