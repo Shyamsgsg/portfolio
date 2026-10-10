@@ -41,19 +41,14 @@
       color:var(--gold-d);padding-left:.32em;
       opacity:0;animation:fade 1.6s ease .9s forwards;
     }
-    footer{
-      padding:0 24px 34px;font-size:12px;font-weight:300;letter-spacing:.14em;
-      color:var(--muted);opacity:0;animation:fade 1.6s ease 1.2s forwards;
-    }
     @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
     @keyframes fade{to{opacity:1}}
     @media (max-width:480px){
       .mark{width:72px;height:72px;margin-bottom:28px}
       h1{letter-spacing:.12em;padding-left:.12em}
       .status{letter-spacing:.24em;padding-left:.24em}
-      footer{font-size:11px;letter-spacing:.1em}
     }
-    @media (prefers-reduced-motion:reduce){.mark,h1,.rule,.status,footer{animation:none;opacity:1}}
+    @media (prefers-reduced-motion:reduce){.mark,h1,.rule,.status{animation:none;opacity:1}}
   </style>
 </head>
 <body>
@@ -74,6 +69,5 @@
     <div class="rule" aria-hidden="true"></div>
     <p class="status">Website under development</p>
   </main>
-  <footer>Surabhi Industries Pte Ltd &middot; Singapore</footer>
 </body>
 </html>
