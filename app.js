@@ -140,10 +140,25 @@
     $("#perfFigs").classList.toggle("n3", showValues);
     const pv = (el, v) => ($(el).innerHTML = `<span class="${cls(v)}">${fmtPct(v)}%</span>`);
     const bm = (el, v) => ($(el).innerHTML = v == null ? "" : `S&amp;P 500 <b class="${cls(v)}">${fmtPct(v)}%</b>`);
-    $("#pfSinceL").textContent = "Since " + fmtD(pp.inception_date);
-    $("#pfYtdL").textContent = "YTD " + pp.ytd_year;
-    pv("#pfSince", pp.since_inception_pct); bm("#pfSinceB", pp.spx_since_inception_pct);
-    pv("#pfYtd", pp.ytd_pct); bm("#pfYtdB", pp.spx_ytd_pct);
+    const { s: cs, H0 } = combinedSeries(pp);
+    if (H0 && cs.length >= 2) {
+      // history_since_inception: tiles use the same chain-linked series (and range anchors) as the chart's All and YTD
+      const endOf = (pts) => pts[pts.length - 1] || { p: null, s: null };
+      const all = endOf(rangePts(cs, "ALL")), ytd = endOf(rangePts(cs, "YTD"));
+      const mY = new Date(H0[0][0] + "T00:00:00Z").toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+      $("#pfSinceL").textContent = "Since inception (" + mY + ")";
+      $("#pfYtdL").textContent = "YTD " + cs[cs.length - 1][0].slice(0, 4);
+      pv("#pfSince", all.p); bm("#pfSinceB", all.s);
+      pv("#pfYtd", ytd.p); bm("#pfYtdB", ytd.s);
+      const mL = new Date(H0[0][0] + "T00:00:00Z").toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
+      $("#perfHeadSub").textContent = "since " + mL + " (time-weighted)";
+      $("#noteMeasured").textContent = "performance is measured since " + mL + " (time-weighted)";
+    } else {
+      $("#pfSinceL").textContent = "Since " + fmtD(pp.inception_date);
+      $("#pfYtdL").textContent = "YTD " + pp.ytd_year;
+      pv("#pfSince", pp.since_inception_pct); bm("#pfSinceB", pp.spx_since_inception_pct);
+      pv("#pfYtd", pp.ytd_pct); bm("#pfYtdB", pp.spx_ytd_pct);
+    }
     pv("#pfDay", pp.day_pct); bm("#pfDayB", pp.spx_day_pct);
     pc.pp = pp;
     renderPC();
@@ -169,8 +184,8 @@
   }
   function niceStep(span) { const raw = span / 4, m = Math.pow(10, Math.floor(Math.log10(raw))); return [1, 2, 2.5, 5, 10].map((k) => k * m).find((k) => k >= raw) || 10 * m; }
   const pctTxt = (v, dp = 2) => (Math.abs(v) < 0.005 ? "0.00" : (v > 0 ? "+" : "−") + Math.abs(v).toFixed(dp)) + "%";
-  function renderPC() {
-    const pp = pc.pp; if (!pp) return;
+  // Series used by both the chart and the Performance tiles: daily series, chain-linked onto the monthly history when enabled.
+  function combinedSeries(pp) {
     let s = (pp.series || []).filter((r) => r[1] != null);
     const H0 = pc.hist && s.length ? pc.hist.rows : null;
     if (H0) {
@@ -179,6 +194,11 @@
       const cut = isoAdd(s[0][0], -4);
       s = H0.filter((r) => r[0] < cut).concat(s.map((r) => [r[0], r[1] * kp, ks != null && r[2] != null ? r[2] * ks : null]));
     }
+    return { s, H0 };
+  }
+  function renderPC() {
+    const pp = pc.pp; if (!pp) return;
+    const { s, H0 } = combinedSeries(pp);
     // pills: enabled only when the range has at least two points (otherwise there is no data yet)
     const avail = {};
     $("#pcPills").querySelectorAll("button").forEach((b) => {

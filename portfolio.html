@@ -34,7 +34,7 @@
       #site-loader .loader-bar{transition:none}
     }
   </style>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261010-2" />
   <script>
     // Skip loader immediately when ?noloader=1 (preview/QA); avoids FOUC behind overlay.
     if (/(?:^|[?&])noloader(?:=|&|$)/.test(location.search)) document.documentElement.classList.remove('loading');
@@ -50,7 +50,7 @@
       <div id="loader-pct" class="loader-pct">0%</div>
     </div>
   </div>
-  <script src="loader.js"></script>
+  <script src="loader.js?v=20261010-2"></script>
 
   <div class="band">
     <header class="site-header">
@@ -85,7 +85,7 @@
       <h1 id="title">Portfolio</h1>
       <p class="lede">A concentrated portfolio of global growth, technology, energy and resources companies listed in the US and Australia, tracked with live market prices.</p>
       <div class="notebox">
-        <p class="novals-only">Weightings are based on market value in US dollars, and performance is measured in US dollars from 10 October 2026. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
+        <p class="novals-only">Weightings are based on market value in US dollars, and <span id="noteMeasured">performance is measured in US dollars from 10 October 2026</span>. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
         Last updated <span id="noteUpdated2">—</span>.</p>
         <p class="vals-only">Unless otherwise stated, values are presented in <b id="noteCcy">US dollars</b>; switch to <span id="noteOther">Singapore dollars</span> with the currency toggle above. Prices are the latest available from Yahoo Finance and may be delayed. ASX-listed holdings are converted at the prevailing AUD/USD rate.
         Last updated <span id="noteUpdated">—</span>.</p>
@@ -105,7 +105,7 @@
       </div>
 
       <div class="perf" id="perf" aria-label="Performance">
-        <div class="perf-head"><h3>Performance</h3><span>US$ · time-weighted · from 10 Oct 2026</span></div>
+        <div class="perf-head"><h3>Performance</h3><span id="perfHeadSub">US$ · time-weighted · from 10 Oct 2026</span></div>
         <div class="figures perf-figs" id="perfFigs">
           <div class="fig"><p class="fig-l" id="pfSinceL">Since 10 Oct 2026</p><p class="fig-v" id="pfSince">—</p><p class="fig-b" id="pfSinceB"></p></div>
           <div class="fig"><p class="fig-l" id="pfYtdL">YTD 2026</p><p class="fig-v" id="pfYtd">—</p><p class="fig-b" id="pfYtdB"></p></div>
@@ -225,6 +225,6 @@
     <p class="legal-disclosure foot-disclosure">Surabhi Industries Pte Ltd is a private holding company that invests only its own capital. We do not manage, accept or invest money on behalf of any third party, and we are not a fund, fund manager or licensed investment adviser. This site is for information only and is not investment advice or an offer of any kind.</p>
     <div class="foot-bar"><span>Surabhi Industries Pte Ltd · Singapore</span><span>© 2026 Surabhi Industries Pte Ltd</span><span>Holdings and values may be delayed.</span><span><a href="index.html">Home</a> · <a href="portfolio.html">Portfolio</a></span></div>
   </footer>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261010-2"></script>
 </body>
 </html>
