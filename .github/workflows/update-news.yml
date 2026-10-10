@@ -6,7 +6,10 @@ on:
     - cron: "20 */3 * * *"
   workflow_dispatch: {}
   push:
-    paths: ["holdings.json", "update_news.py"]
+    branches: [main]
+    paths:
+      - holdings.json
+      - update_news.py
 
 permissions:
   contents: write

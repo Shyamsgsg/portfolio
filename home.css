@@ -1,7 +1,7 @@
 /* Surabhi Industries — home (Temasek-inspired full-bleed video hero). */
 :root{
   --ink:#212c2f; --muted:#5d6669; --purple:#21004f; --purple2:#3d1a6e;
-  --teal:#15af9b; --teal-b:#00af9b; --line:#e3e3e3; --grey:#f5f4f7;
+  --teal:#C9A24B; --teal-b:#C9A24B; --gold:#C9A24B; --gold-h:#B08A3A; --line:#e3e3e3; --grey:#f5f4f7;
   --font:Roboto, Helvetica, Arial, sans-serif;
   --serif:Cinzel, "Times New Roman", serif;
 }
@@ -21,8 +21,10 @@ video{display:block}
 }
 .home-header .brand{
   font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.12em;
-  color:#fff;text-transform:uppercase;
+  color:#fff;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;
 }
+.home-header .brand .emblem,.home-footer .brand .emblem{width:28px;height:28px;flex:0 0 auto}
+.home-footer .brand{display:inline-flex;align-items:center;gap:10px}
 .home-nav{display:flex;align-items:center;gap:28px}
 .home-nav a{
   font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -31,11 +33,11 @@ video{display:block}
 .home-nav a:hover,.home-nav a.on{border-bottom-color:var(--teal);color:#fff}
 .home-nav a.btn-nav{
   font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  background:#fff;color:#15af9b;padding:11px 18px;border:2px solid #fff;
+  background:#fff;color:var(--gold);padding:11px 18px;border:2px solid #fff;
   border-bottom:2px solid #fff;white-space:nowrap;line-height:1.1;
 }
 .home-nav a.btn-nav:hover{
-  background:#15af9b;border-color:#15af9b;color:#fff;border-bottom-color:#15af9b;
+  background:var(--gold-h);border-color:var(--gold-h);color:#fff;border-bottom-color:var(--gold-h);
 }
 
 /* —— full-viewport video hero —— */
@@ -76,7 +78,7 @@ video{display:block}
   color:rgba(255,255,255,.92);margin-bottom:28px;line-height:1.35;max-width:28ch;
 }
 .btn-hero{
-  display:inline-block;background:#fff;color:var(--teal-b);
+  display:inline-block;background:#fff;color:var(--gold);
   font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   padding:14px 28px;border:2px solid #fff;transition:background .2s,color .2s;
 }
@@ -149,7 +151,7 @@ video{display:block}
 .news-card h3{font-size:17px;line-height:1.35;font-weight:500;color:var(--ink);margin-bottom:12px;flex:1}
 .news-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:10px;border-top:1px solid #eee}
 .news-card .source{font-size:12px;color:var(--muted)}
-.news-card .read{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.04em;text-transform:uppercase}
+.news-card .read{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.04em;text-transform:uppercase}
 .news-empty{grid-column:1/-1;color:var(--muted);font-size:15px;padding:20px 0}
 
 /* —— footer —— */

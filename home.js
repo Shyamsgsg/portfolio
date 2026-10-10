@@ -1,5 +1,65 @@
-/* Home page: load news.json and render filterable insight cards. */
+/* Home: random hero video (avoid last) + portfolio news. */
 (() => {
+  const HEROES = [
+    {
+      id: "marina",
+      mp4: "media/hero-marina.mp4",
+      webm: "media/hero-marina.webm",
+      poster: "media/hero-marina-poster.jpg",
+      credit: "Singapore Marina Bay — Thet Tun Aung / Pexels",
+    },
+    {
+      id: "hongkong",
+      mp4: "media/hero-hongkong.mp4",
+      webm: "media/hero-hongkong.webm",
+      poster: "media/hero-hongkong-poster.jpg",
+      credit: "Hong Kong skyline at night — Henry / Pexels",
+    },
+    {
+      id: "dubai",
+      mp4: "media/hero-dubai.mp4",
+      webm: "media/hero-dubai.webm",
+      poster: "media/hero-dubai-poster.jpg",
+      credit: "Dubai Marina at night — Spiffy / Pexels",
+    },
+  ];
+  const KEY = "si-hero-last";
+
+  function pickHero() {
+    let last = null;
+    try { last = localStorage.getItem(KEY); } catch (_) {}
+    let pool = HEROES.filter((h) => h.id !== last);
+    if (!pool.length) pool = HEROES.slice();
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    try { localStorage.setItem(KEY, pick.id); } catch (_) {}
+    return pick;
+  }
+
+  function mountHero() {
+    const media = document.querySelector(".hero-media");
+    const video = document.querySelector(".hero-media video");
+    if (!media || !video) return;
+    const h = pickHero();
+    media.style.backgroundImage = `url('${h.poster}')`;
+    video.setAttribute("poster", h.poster);
+    video.innerHTML = "";
+    const webm = document.createElement("source");
+    webm.src = h.webm;
+    webm.type = "video/webm";
+    const mp4 = document.createElement("source");
+    mp4.src = h.mp4;
+    mp4.type = "video/mp4";
+    video.appendChild(webm);
+    video.appendChild(mp4);
+    video.load();
+    const play = () => video.play().catch(() => {});
+    if (video.readyState >= 2) play();
+    else video.addEventListener("loadeddata", play, { once: true });
+  }
+
+  mountHero();
+
+  /* —— news —— */
   const grid = document.getElementById("news-grid");
   const filters = document.getElementById("news-filters");
   const updatedEl = document.getElementById("news-updated");
@@ -7,17 +67,13 @@
 
   let items = [];
   let active = "ALL";
-
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   function fmtDate(iso) {
     if (!iso) return "";
     try {
-      const d = new Date(iso);
-      return d.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-    } catch {
-      return "";
-    }
+      return new Date(iso).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+    } catch { return ""; }
   }
 
   function renderFilters(tickers) {
@@ -54,7 +110,7 @@
       .join("");
   }
 
-  async function load() {
+  async function loadNews() {
     try {
       const r = await fetch("news.json?t=" + Date.now());
       if (!r.ok) throw new Error("news.json " + r.status);
@@ -66,12 +122,8 @@
         updatedEl.textContent =
           "Updated " +
           d.toLocaleString("en-US", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit",
-            timeZone: "Pacific/Port_Moresby",
+            day: "numeric", month: "short", year: "numeric",
+            hour: "numeric", minute: "2-digit", timeZone: "Pacific/Port_Moresby",
           }) +
           " PGT";
       }
@@ -82,6 +134,5 @@
       console.warn(e);
     }
   }
-
-  load();
+  loadNews();
 })();

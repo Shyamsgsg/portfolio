@@ -63,7 +63,16 @@
     const C = effCcy(), other = C === "USD" ? "SGD" : "USD";
     const title = h.title || "Portfolio";
     document.title = "Surabhi Industries | " + title; $("#title").textContent = title; $("#crumbTitle").textContent = title;
-    if (h.wordmark) { $("#wordmark").textContent = h.wordmark; $("#wordmark2").textContent = h.wordmark; $("#copy").textContent = "© " + (h.owner || h.wordmark); }
+    if (h.wordmark) {
+      const setWm = (el) => {
+        if (!el) return;
+        const span = el.querySelector("span");
+        if (span) span.textContent = h.wordmark;
+        else el.textContent = h.wordmark;
+      };
+      setWm($("#wordmark")); setWm($("#wordmark2"));
+      $("#copy").textContent = "© 2026 " + (h.owner || h.wordmark);
+    }
     document.body.classList.toggle("private", state.priv);
     $("#privacy").classList.toggle("on", state.priv);
     document.querySelectorAll(".ccy-switch [data-ccy]").forEach((b) => b.classList.toggle("on", b.dataset.ccy === C));

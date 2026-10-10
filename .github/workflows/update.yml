@@ -12,7 +12,9 @@ on:
     - cron: "15 12 * * 0,6"
   workflow_dispatch: {}   # "Run workflow" button in the Actions tab
   push:
-    paths: ["holdings.json"]   # re-price immediately when holdings are edited
+    branches: [main]
+    paths:
+      - holdings.json
 
 permissions:
   contents: write
