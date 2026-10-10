@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10T08:38:12Z",
+  "updated": "2026-10-10T08:55:30Z",
   "items": [
     {
       "id": "7a0010cdafdacd55",
@@ -22,17 +22,6 @@
       "source": "News",
       "published": "2026-10-10T06:52:58+00:00",
       "logo": "logos/TSLA.svg"
-    },
-    {
-      "id": "d749d685eab0d75a",
-      "ticker": "GOOG",
-      "symbol": "GOOG",
-      "company": "Alphabet (Class C)",
-      "title": "Cathie Wood-Led Ark Invest Sells AMD, SPCX, GOOG Stocks — But Loads Up On CMPS, NTLA, CRSP And Other Healthcare Firms",
-      "link": "https://stocktwits.com/news-articles/markets/equity/cathie-wood-ark-invest-buys-biotech-stocks-sells-amd-spcx-goog/cZxTVbERBnq?.tsrc=rss",
-      "source": "News",
-      "published": "2026-10-10T06:02:32+00:00",
-      "logo": "logos/GOOG.svg"
     },
     {
       "id": "754a5f82b5bf80a1",
@@ -77,6 +66,17 @@
       "source": "News",
       "published": "2026-10-10T01:01:49+00:00",
       "logo": "logos/TSLA.svg"
+    },
+    {
+      "id": "0b2e332bd01e400a",
+      "ticker": "GOOG",
+      "symbol": "GOOG",
+      "company": "Alphabet (Class C)",
+      "title": "Tech Edge Will be Onsite at Money20/20 2026 in Las Vegas",
+      "link": "https://finance.yahoo.com/technology/ai/articles/tech-edge-onsite-money20-20-222106872.html?.tsrc=rss",
+      "source": "News",
+      "published": "2026-10-09T22:21:06+00:00",
+      "logo": "logos/GOOG.svg"
     },
     {
       "id": "8870192201b10200",
